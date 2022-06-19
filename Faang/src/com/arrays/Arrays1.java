@@ -70,13 +70,13 @@ public class Arrays1 {
         }
     }
     
-    void swapInArray(int[] nums,int i1,int i2){
+    public static void swapInArray(int[] nums,int i1,int i2){
         int temp = nums[i2];
         nums[i2] = nums[i1];
         nums[i1] = temp;
     }
     
-    void printArray(int[] arr) {
+    public static void printArray(int[] arr) {
     	for(int a:arr) {
     		System.out.print(a + " ");
     	}
