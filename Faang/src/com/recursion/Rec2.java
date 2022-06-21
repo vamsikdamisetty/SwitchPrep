@@ -21,6 +21,9 @@ public class Rec2 {
 		
 		r2.subseqIntArr(a, 0, 3, ll);
 		
+		ll = new ArrayList<>();
+		r2.subseqIntArr2(a, 0, 3, ll);
+		
 		int[] a2 = {1,2,9,3,4,5,6};
 		ArrayList<Integer> ll3 = new ArrayList<>();
 		System.out.println("\n\nStop when any subseq with sum == k is found: ");
@@ -39,6 +42,11 @@ public class Rec2 {
 		 // space O(x*k) x-> no of combinations (Ignoring aux space for recursion)
 		 r2.combinations(new int[] {2,3,6,7},0,7,new ArrayList<>(),res);
 	     System.out.println(res); 
+	     
+	     res = new ArrayList<>();
+	     r2.combinations1(new int[] {2,3,6,7},0,7,new ArrayList<>(),res);
+	     System.out.println(res); 
+	     
 	     
 	     System.out.println("\n\nCombinations 2 : "); // Here it is about selecting 
 		 //O(2^n * k) k->avg size of combination as we create list out of it evertime O(x*k) x-> no of combinations
@@ -68,6 +76,26 @@ public class Rec2 {
         }
     }
     
+    void combinations1(int[] candidates,int i,int target,List<Integer> ds,List<List<Integer>> res){
+        
+        if(target == 0){
+            res.add(new ArrayList<>(ds));
+            return;
+        }
+        
+        if(i == candidates.length){
+            return;
+        }
+        
+        
+        for(int j=i;j<candidates.length;j++) {
+	        if(candidates[j] <= target){
+	            ds.add(candidates[j]);
+	            combinations1(candidates,j,target-candidates[j],ds,res);
+	            ds.remove(ds.size()-1);
+	        }
+        }
+    }
     void combinations(int[] candidates,int i,int target,List<Integer> ds,List<List<Integer>> res){
         
         if(target == 0){
@@ -163,6 +191,28 @@ public class Rec2 {
 		ll.remove(ll.size() - 1);
 		subseqIntArr(a,i+1,n,ll);
 	}
+	
+	void subseqIntArr2(int[] a,int i,int n,ArrayList<Integer> ll) {
+		
+		if(i == n) {
+			if(ll.isEmpty()) {
+				System.out.println("Empty");
+			}else {
+				ll.forEach(e->System.out.print(e + " "));
+				System.out.println();
+			}
+			return;
+		}
+		int j = i;
+		for( ;j<n;j++) {
+			int x = a[j];
+			ll.add(x);
+			subseqIntArr2(a,j+1,n,ll);
+			ll.remove(ll.size() - 1);
+		}
+		subseqIntArr2(a,j,n,ll);
+	}
+	
 	
 	void subseqStr(String s,String osf) {
 		if(s.length() == 0) {
