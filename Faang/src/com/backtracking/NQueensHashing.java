@@ -3,15 +3,16 @@ package com.backtracking;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NQueens {
+public class NQueensHashing {
 
+	/*
+	 * Time Complexity: Exponential in nature since we are trying out all ways, to be precise its O(N! * N).
+	 * 
+	 * Space Complexity: O(N)
+	 * 
+	 * By this Hashing we are saving O(n+n+n) from isSafe method by using Hashing technique
+	 */
 	public static void main(String[] args) {
-        /*
-         * Time Complexity:
-         * Time Complexity: Exponential in nature since we are trying out all ways, to be precise its O(N! * N).
-         * 
-         * Space Complexity: O( N^2 )
-         */
 		NQueens nq = new NQueens();
 		int N = 5;
         List < List < String >> queen = nq.solveNQueens(N);
@@ -26,7 +27,7 @@ public class NQueens {
         }
 	}
 	
-    public List<List<String>> solveNQueens(int n) {
+	public List<List<String>> solveNQueens(int n) {
         List<List<String>> res = new ArrayList<>();
         
         char[][] board = new char[n][n];
@@ -37,12 +38,16 @@ public class NQueens {
             }
         }
         
-        placeQueens(n,0,board,res);
+        boolean[] left = new boolean[n];
+        boolean[] upperDiagonal = new boolean[2*n - 1];
+        boolean[] lowerDiagonal = new boolean[2*n - 1];
+        
+        placeQueens(n,0,board,left,upperDiagonal,lowerDiagonal,res);
         
         return res;
     }
     
-    void placeQueens(int n,int col,char[][] board,List<List<String>> res){
+    void placeQueens(int n,int col,char[][] board,boolean[] left,boolean[] upperDiagonal,boolean[] lowerDiagonal,List<List<String>> res){
         
         if(col == n){
             addSolution(n,board,res);
@@ -50,44 +55,18 @@ public class NQueens {
         }
         
         for(int row=0;row<n;row++){
-            if(isSafeForQ(board,row,col)){
+            if(!left[row] && !upperDiagonal[n-1 + col-row]  && !lowerDiagonal[row + col]){
+                left[row] = true;
+                upperDiagonal[n-1 + col-row] = true;
+                lowerDiagonal[row + col] = true;
                 board[row][col] = 'Q';
-                placeQueens(n,col+1,board,res);
+                placeQueens(n,col+1,board,left,upperDiagonal,lowerDiagonal,res);
                 board[row][col] = '.';
+                left[row] = false;
+                upperDiagonal[n-1 + col-row] = false;
+                lowerDiagonal[row + col] = false;
             }
         }
-    }
-    
-    boolean isSafeForQ(char[][] board, int row,int col){
-        
-        int tRow = row;
-        int tCol = col;
-        
-        while(tRow>=0 && tCol >= 0){
-            if(board[tRow][tCol] == 'Q') return false;
-            tRow--;
-            tCol--;
-        }
-        
-        tRow = row;
-        tCol = col;
-        
-        
-        while(tCol >= 0){
-            if(board[tRow][tCol] == 'Q') return false;
-            tCol--;
-        }
-        
-        tCol = col;
-        
-        while(tRow < board.length && tCol >= 0){
-            if(board[tRow][tCol] == 'Q') return false;
-            tRow++;
-            tCol--;
-        }
-        
-        return true;
-        
     }
     
     void addSolution(int n,char[][] board,List<List<String>> res){
