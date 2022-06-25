@@ -110,7 +110,7 @@ public class Arrays1 {
             return 0;
         }
             
-        long l = p/s; //
+        long l = p/s; // to find m+r
         missing = (int)((s + l)/2);
         repeating = (int)(l - missing);
         System.out.println("Repeating : " + repeating);

@@ -53,12 +53,14 @@ public class Arrays2 {
     
     public void rotate(int[][] matrix) {
         
+    	//Transpose 
         for(int i = 0;i<matrix.length;i++){
             for(int j=i;j<matrix.length;j++){
                 swap(matrix,i,j,j,i);
             }
         }
         
+        //reverse
         for(int i = 0;i<matrix.length;i++){
             for(int j=0;j<(matrix.length/2);j++){
                 swap(matrix,i,j,i,matrix.length-j-1);
