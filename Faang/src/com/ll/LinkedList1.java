@@ -51,8 +51,8 @@ public class LinkedList1 {
 	        if (head == null){
 	            return head;
 	        }
-	        Node curr = head.next;
-	        Node prev = head;
+	        Node curr = head;
+	        Node prev = null;
 	        
 	        while(curr != null){
 	        	Node temp = curr.next;
@@ -60,7 +60,6 @@ public class LinkedList1 {
 	            prev = curr;
 	            curr = temp;
 	        }
-	        head.next = null;
 	        return prev;
 	    }
 
