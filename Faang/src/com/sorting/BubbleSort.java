@@ -6,6 +6,7 @@ public class BubbleSort {
   public static void main(String[] args) {
     int arr[] = {4,2,6,1,4};
     bubbleSort(arr);
+    bubbleSortOpt(arr);
     for (int a:
     arr) {
       System.out.println(a);

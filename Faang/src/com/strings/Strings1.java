@@ -90,6 +90,7 @@ public class Strings1 {
 	        for(int i = 0; i < string.length()/2; i++){  
 	            if(string.charAt(i) != string.charAt(string.length()-i-1)){  
 	                flag = false;  
+	                sc.close();
 	                break;  
 	            }  
 	        }  
@@ -97,7 +98,9 @@ public class Strings1 {
 	            System.out.println("Given string is palindrome");  
 	        else  
 	            System.out.println("Given string is not a palindrome");
+	        
         }
+        
         
     }
     
