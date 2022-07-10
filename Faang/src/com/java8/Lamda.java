@@ -1,5 +1,6 @@
 package com.java8;
 
+import java.util.List;
 import java.util.function.BiConsumer;
 
 public class Lamda {
@@ -27,6 +28,10 @@ public class Lamda {
 		BiConsumer<Integer, String> biConsumer = (a,b)-> System.out.println(a+b);
 		biConsumer.accept(0, "Hero_Vamsi");
 		
+		t.join();
+		List<Integer> l1 = List.of(1,2,3);
+		List<Integer> l2 = List.of(1,2,3);
+		System.out.println(l1.equals(l2));
 	}
 	
 	

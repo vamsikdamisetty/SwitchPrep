@@ -7,7 +7,7 @@ import java.util.List;
 public class TwoPointer {
 
 	public static List<List<Integer>> threeSum(int[] nums) {
-
+		//Sorting the array to apply 2 pointer
 		Arrays.sort(nums);
 
 		List<List<Integer>> triplets = new LinkedList<>();
@@ -97,12 +97,18 @@ public class TwoPointer {
         int[] sMax = new int[n];
         int maxi = Integer.MIN_VALUE;
         
+        /*
+         * finding prefix max
+         */
         for(int i=0;i<n;i++){
             maxi = Math.max(maxi,height[i]);
             pMax[i] = maxi;
         }
         
         maxi = Integer.MIN_VALUE;
+        /*
+         * finding suffix max
+         */
         for(int i=n-1;i>=0;i--){
             maxi = Math.max(maxi,height[i]);
             sMax[i] = maxi;
@@ -125,7 +131,9 @@ public class TwoPointer {
         int l = 0,r = height.length - 1;
         
         while(l < r){
+        	//We will only proceed the side for which we are sure there is a elevation on other side to hold water
             if(height[l] <= height[r]){
+            	//we know right side has bigger elevation, go for lmax
                 if(height[l] < lMax){
                     water += lMax - height[l];
                 }else{
@@ -157,7 +165,7 @@ public class TwoPointer {
 		tp.printArray(a);
 		tp.removeDuplicates(null);
 		
-		System.out.println("\n\n6. Max continuous number of 1’s"); //O(1);
+		System.out.println("\n\n6. Max continuous number of 1ï¿½s"); //O(1);
 		System.out.println("Max consecutive 1's : " + tp.findMaxConsecutiveOnes(new int[] {1,1,0,1,1,1}));
 		
 		int height[] = {0,1,0,2,1,0,1,3,2,1,2,1};

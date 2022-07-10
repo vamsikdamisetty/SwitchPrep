@@ -109,6 +109,24 @@ public class LinkedList1 {
                     
                 }
             }
+            /* another way just loop through the 2nd list till element is small
+             while(curr1 != null && curr2 != null){
+            if(curr1.val > curr2.val){
+                    prev.next = curr2;
+                    while(curr2.next != null && curr2.next.val < curr1.val)
+                        curr2 = curr2.next;
+                        
+                    prev = curr2;
+                    curr2 = curr2.next;
+                    prev.next = curr1;
+                    prev = curr1;
+                
+            }else{
+                prev = curr1;
+            }
+            curr1 = curr1.next;
+        	}
+             */
             
             if(curr2 != null){
             	prev.next = curr2;
