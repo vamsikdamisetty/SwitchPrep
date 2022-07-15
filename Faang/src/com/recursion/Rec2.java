@@ -5,6 +5,9 @@ import java.util.List;
 
 public class Rec2 {
 
+	/*
+	 * WE KNOW THE NUMBER OF SUBSETS FOR A SET FORMULA 2^n -1 
+	 */
 	public static void main(String[] args) {
 		
 		Rec2 r2 = new Rec2();
@@ -66,7 +69,7 @@ public class Rec2 {
         
 	    for(int j = i;j < candidates.length;j++)
         {
-            if(target - candidates[j] < 0 ) return;
+            if(target - candidates[j] < 0 ) return;//we are returning becas array is sorted
             //J == I because ignore for firsst and rest skip , Hence no diplicate combinations (Only once that combination witll be considered)
             if(j == i || candidates[j] != candidates[j-1]){
                 ds.add(candidates[j]);
@@ -82,11 +85,6 @@ public class Rec2 {
             res.add(new ArrayList<>(ds));
             return;
         }
-        
-        if(i == candidates.length){
-            return;
-        }
-        
         
         for(int j=i;j<candidates.length;j++) {
 	        if(candidates[j] <= target){

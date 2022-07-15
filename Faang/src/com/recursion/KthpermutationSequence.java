@@ -17,7 +17,7 @@ public class KthpermutationSequence {
 	 */
 	public static void main(String[] args) {
 		
-		System.out.println(getPermutation(7, 81));
+		System.out.println(getPermutation(4, 18));
 	} 
 	
 	 public static String getPermutation(int n, int k) {
@@ -31,19 +31,20 @@ public class KthpermutationSequence {
 	        }
 	        
 	        list.add(n);
-	        k--;
+	        k--; //logic follows 0 indexing
 	        String res = "";
 	        while(true){
 	            
+	        	//find which elemnt is suitable 
 	            res += list.get(k/fact);
-	            list.remove(k/fact);
+	            list.remove(k/fact);  
 	            
 	            if(list.size() == 0){
 	                break;
 	            }
 	            
-	            k = k % fact;
-	            fact = fact/list.size();
+	            k = k % fact; //to fill next number in res
+	            fact = fact/list.size(); //Decresing the level of fact
 	            
 	        }
 	        return res;
