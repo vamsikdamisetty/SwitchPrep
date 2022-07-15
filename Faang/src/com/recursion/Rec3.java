@@ -107,9 +107,9 @@ public class Rec3 {
 
 		int num = a[i];
 		sum += num;
-		subsetSum(a, n, i+1, sum, ll);
+		subsetSum1(a, n, i+1, sum, ll);
 		sum -= num;
-		subsetSum(a, n, i+1, sum, ll);
+		subsetSum1(a, n, i+1, sum, ll);
 	}
 	
     void subsetSum2(int[] a,int n,int i,List<Integer> ll,List<List<Integer>> al) {
