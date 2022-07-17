@@ -9,11 +9,13 @@ public class NQueens {
         /*
          * Time Complexity:
          * Time Complexity: Exponential in nature since we are trying out all ways, to be precise its O(N! * N).
+         * N! because for 4*4 if we place one Q in a column (4 ways) 
+         * then only 3 ways then only 2 ways then 1 way for last Q
          * 
          * Space Complexity: O( N^2 )
          */
 		NQueens nq = new NQueens();
-		int N = 5;
+		int N = 4;
         List < List < String >> queen = nq.solveNQueens(N);
         int i = 1;
         for (List < String > it: queen) {

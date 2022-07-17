@@ -9,7 +9,7 @@ public class WordBreak {
 	/*
 	 * This solution is using backtracking but can be done better with DP 
 	 * Time Complexity: O(2n). Because there are 2n combinations in The Worst Case.
-	 * Auxiliary Space: O(n2). Because of the Recursive Stack of wordBreakUtil(…)
+	 * Auxiliary Space: O(n2). Because of the Recursive Stack of wordBreakUtil(ï¿½)
 	 * function in The Worst Case.
 	 */
 	 public static void main(String args[])
@@ -45,11 +45,11 @@ public class WordBreak {
 		
 		for(int i=1;i<=s.length();i++) {
 			
-			String prefix = s.substring(0,i);
+			String prefix = s.substring(0,i); // making prefizes for recursion
 			
-			if(dict.contains(prefix)) {
+			if(dict.contains(prefix)) { // Verifying valid prefixes for recursion
 				
-				if(i == s.length()) {
+				if(i == s.length()) { //Base condition
 					ans += prefix;
 					System.out.println(ans);
 					return;
