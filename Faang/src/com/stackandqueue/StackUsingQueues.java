@@ -40,7 +40,8 @@ class MyStack {
         q1 = new LinkedList<>();
         q2 = new LinkedList<>();
     }
-    
+
+    //O(n)
     public void push(int x) {
         q2 .add(x);
         q2.addAll(q1);
@@ -50,7 +51,7 @@ class MyStack {
         q1 = temp;
         
     }
-    
+    //O(n)
     public void pushSingleQueue(int x) {
         q1.add(x);
         for(int i=1;i<q1.size();i++) {

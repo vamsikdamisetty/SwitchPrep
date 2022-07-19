@@ -2,6 +2,7 @@ package com.stackandqueue;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.LinkedList;
 
 import com.arrays.Arrays1;
 
@@ -35,16 +36,19 @@ public class SlidingWindowMax {
 		
 		for(int i=0;i<n;i++) {
 			
+			//To make sure only window is in queue
 			if(!deque.isEmpty() && deque.peek() == i-k) {
 				deque.pollFirst();
 			}
 			
+			//Remove all the indexs whose value is less than incoming one to keep maximum value at front 
 			while(!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {
 				deque.pollLast();
 			}
 			
 			deque.offer(i);
 			
+			//Start inserting int result aftet reaching the end of first window
 			if(i >= k-1) {
 				res[i-(k-1)] = nums[deque.peekFirst()];
 			}

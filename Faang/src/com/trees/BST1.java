@@ -31,9 +31,10 @@ public class BST1 {
 		System.out.println(node == null ? "Not found" :"FOund Node:" +node.data);
 		
 		node= bst.searchBST(root, 99);
-		System.out.println(node == null ? "Not found" :"FOund Node:" +node.data);
+		System.out.println(node == null ? "Not found 99" :"FOund Node:" );
 		
 		System.out.println("Find Ceil: ");
+		System.out.println(bst.findCeil(root, 10));
 		System.out.println(bst.findCeil(root, 9));
 		System.out.println(bst.findCeil(root, 16));
 		
@@ -68,8 +69,9 @@ public class BST1 {
 		System.out.println("\n4. Check is a BT is BST or not?");
 		System.out.println(bst.isValidBST(root));
 		
-		//TC : O(H) 
+		//TC : O(H) Least Common Ancestor
 		System.out.println("\n5. Find LCA of two nodes in BST:");
+		System.out.println(bst.lca(root, 6, 5).data);
 		System.out.println(bst.lca(root, 7, 5).data);
 	}
 	
