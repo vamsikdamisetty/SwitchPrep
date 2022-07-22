@@ -26,6 +26,8 @@ public class DnC {
 		int kthElement = findKInSortedArrays(new int[] {1,2,4,9,12},new int[] {3,8,13,14,15}, 10);
 		System.out.println("\n5.K-th element of two sorted arrays");
 		System.out.println(kthElement);
+	
+		System.out.println(findMedian(new int[][] {{1,3,5},{3,6,9},{3,6,9}}));
 	}
 
 	public static int singleNonDuplicate(int[] nums) {
@@ -139,4 +141,44 @@ public class DnC {
        return 0;
    }
 
+   
+   public static int findMedian(int[][] A) {
+       
+       int l =0; 
+       int h = (int)1e9;
+       int n = A.length;
+       int m = A[0].length;
+       
+       while(l<=h){
+           int mid = (l+h)/2;
+           int cnt = 0;
+           for(int i=0;i<n;i++){
+               cnt += findElementsLessOrEqual(A[i],mid);                
+           }
+           
+           if(cnt <= (n*m)/2){
+               l = mid+1;
+           }else{
+               h = mid-1;
+           }
+       }
+       return l;
+   }
+   
+   static int findElementsLessOrEqual(int[] arr,int k){
+       int l =0;
+       int h = arr.length - 1;
+       
+       while(l <= h){
+           int  m = (l+h)/2;
+           
+           if(arr[m] <= k){
+               l = m+1;
+           }else{
+               h = m-1;
+           }
+       }
+       
+       return l;
+   }
 }

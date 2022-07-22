@@ -31,8 +31,11 @@ public class BinarySearch {
 		}
 		
 		System.out.println("Lower Bound 5: " + first(arr2, 0, arr.length-1, 5, arr.length));
+		System.out.println(lowerBound(arr2, 2)); //iterative
 		System.out.println("Lower Bound 1: " + first(arr2, 0, arr.length-1, 1, arr.length));
 		System.out.println("Lower Bound 8 by ArrayList: " + list.indexOf(8));
+		
+		
 		
 		System.out.println("Upper Bound 8: " + last(arr2, 0, arr.length-1, 8, arr.length));
 		System.out.println("Upper Bound 9: " + last(arr2, 0, arr.length-1, 9, arr.length));
@@ -43,6 +46,10 @@ public class BinarySearch {
 		if(lower != 0) {
 			System.out.println(arr2[lower-1]);
 		}
+		
+		System.out.println((int)1e9);
+		System.out.println(Integer.MAX_VALUE);
+		
 	}
 	
 	   /* if x is present in arr[] then returns the index of
@@ -78,4 +85,29 @@ public class BinarySearch {
         }
         return -1;
     }
+    
+    
+    public static int  lowerBound(int[] arr,int k) {
+		
+    	int l = 0;
+    	int h = arr.length -1;
+    	
+    	while(l<=h) {
+    		
+    		int  m = (l+h)/2;
+    		
+    		if( (m == 0 || arr[m-1] < k) && arr[m]==k ) {
+    			return m;
+    		}
+    		
+    		if(k <= arr[m]) {
+    			h = m-1;
+    		}
+    		else {
+    			l = m+1;
+    		}
+    	}
+    	
+    	return -1;
+	}
 }
