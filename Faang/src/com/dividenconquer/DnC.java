@@ -27,6 +27,8 @@ public class DnC {
 		System.out.println("\n5.K-th element of two sorted arrays");
 		System.out.println(kthElement);
 	
+		//O(n * logm)
+		System.out.println("\n2. Matrix Median");
 		System.out.println(findMedian(new int[][] {{1,3,5},{3,6,9},{3,6,9}}));
 	}
 
