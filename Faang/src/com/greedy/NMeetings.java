@@ -22,6 +22,7 @@ public class NMeetings {
 			list.add(new Meeting(start[i], end[i]));
 		}
 
+//		list.sort((m1,m2)->m1.end-m2.end);
 		Collections.sort(list, (m1, m2) -> m1.end < m2.end ? -1 : 1);
 
 		int meetingCount = 0;
