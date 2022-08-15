@@ -48,7 +48,11 @@ public class BinaryTree {
 		if(root == null) return;
 		Queue<TreeNode> queue = new LinkedList<TreeNode>();
 		queue.offer(root);
-		
+		/*
+		 * https://leetcode.com/problems/binary-tree-level-order-traversal/submissions/
+		 * 
+		 * No need of extra for loop unless we want to seperate the levels
+		 */
 		while(!queue.isEmpty()) {
 			int levelSize = queue.size();
 			for(int i=0;i<levelSize;i++) {
