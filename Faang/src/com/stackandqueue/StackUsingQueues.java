@@ -12,6 +12,7 @@ public class StackUsingQueues {
 	public static void main(String[] args) {
 		MyStack s = new MyStack();
 		
+		System.out.println(s.pop());
 		s.push(1);
 		s.push(2);
 		s.push(3);
@@ -60,8 +61,8 @@ class MyStack {
         
     }
     
-    public int pop() {
-        return q1.remove();
+    public Integer pop() {
+        return q1.poll();
     }
     
     public int top() {

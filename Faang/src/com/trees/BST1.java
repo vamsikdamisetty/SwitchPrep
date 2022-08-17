@@ -7,9 +7,8 @@ public class BST1 {
 	public static void main(String[] args) {
 		TreeNode root = new TreeNode(8);
 		root.left = new TreeNode(4);
-		root.left.left = new TreeNode(2);
-		root.left.left.left = new TreeNode(1);
 		root.left.left = new TreeNode(3);
+		root.left.left.left = new TreeNode(1);
 		
 		root.left.right = new TreeNode(6);
 		root.left.right.left = new TreeNode(5);
@@ -86,6 +85,9 @@ public class BST1 {
         return root;
     }
     
+    /*
+     * Last time I move left I keep the root and it will be ceil
+     */
     public int findCeil(TreeNode root, int x) {
 
         int ceil = -1;
@@ -104,6 +106,9 @@ public class BST1 {
             
     }
     
+    /*
+     * Last time I move right I keep the root and it will be ceil
+     */
     public int floorInBST(TreeNode root, int key) {
         int floor = -1 ;
         
