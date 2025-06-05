@@ -1,0 +1,107 @@
+Flatten a linked list
+O(2*N*M) , space O(N)  (N number of node in horizontal list M MAX no of nodes in each vertical list)
+		// merge takes 2M to merge two lists  and  recursion stack takes N space 
+		// https://practice.geeksforgeeks.org/problems/flattening-a-linked-list/1
+		// Merge sort kind of logic (Uses Reccursion)
+		// We use recursion here to avoid taking care next link while merging the two child lists
+		
+		
+	Node flatten(Node head) {
+        // code here
+        if(head == null || head.next == null){
+            return head;
+        }
+        
+        Node mergedHead = flatten(head.next);
+        
+        return merge(head,mergedHead);
+    }
+    
+    Node merge(Node head1,Node head2){
+        
+        Node dummyNode = new Node(0);
+        
+        Node res = dummyNode;
+        
+        while(head1 != null && head2 != null){
+            
+            if(head1.data < head2.data){
+                res.bottom = head1;
+                head1 = head1.bottom;
+            }else{
+                res.bottom = head2;
+                head2 = head2.bottom;
+            }
+            res = res.bottom;
+        }
+        
+        if(head1 != null){
+            res.bottom = head1;
+        }
+        
+        if(head2 != null){
+            res.bottom = head2;
+        }
+        
+        return dummyNode.bottom;
+    }
+    
+    
+    
+    
+Clone a Linked List with random and next pointer.
+
+Brute Force is by using hash map and storing newly copied nodes
+
+
+Optimized Solution O(n) ,space O(1)
+
+	    public Node copyRandomList(Node head) {
+        // If the original list
+        // is empty, return null
+        if (head == null) return null;
+
+        // Step 1: Insert copy of
+        // nodes in between
+        insertCopyInBetween(head);
+        // Step 2: Connect random
+        // pointers of copied nodes
+        connectRandomPointers(head);
+        // Step 3: Retrieve the deep
+        // copy of the linked list
+        return getDeepCopyList(head);
+    }
+
+    void insertCopyInBetween(Node head){
+        while(head != null){
+            Node node = new Node(head.val);
+
+            node.next = head.next;
+            head.next = node;
+            head = node.next;
+        }
+    }
+
+    void connectRandomPointers(Node head){
+
+        while(head != null){
+            Node copyNode = head.next;
+            if(head.random != null){
+                copyNode.random = head.random.next;
+            }
+            head = head.next.next;
+        }
+    }
+
+    Node getDeepCopyList(Node head){
+        Node dummy = new Node(0);
+        Node res = dummy;
+        
+        while(head != null){
+            res.next = head.next;
+            head.next = head.next.next;
+            res = res.next;
+            head = head.next;
+        }
+        return dummy.next;
+    }

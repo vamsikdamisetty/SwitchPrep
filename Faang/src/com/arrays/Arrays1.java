@@ -186,24 +186,40 @@ public class Arrays1 {
     	printArray(nums2);
     }
     
-    public int maxSubArray(int[] nums) {
-        int sum =0;
-        int maxi = Integer.MIN_VALUE;
+    public long maxSubArray(int[] arr) {
+    	long maxi = Long.MIN_VALUE; // maximum sum
+    	int n = arr.length;
+        long sum = 0;
+
         int start = 0;
-        int end = 0;
-        for(int i=0;i<nums.length;i++){
-            sum += nums[i];
-            if(sum > maxi) {
+        int ansStart = -1, ansEnd = -1;
+        for (int i = 0; i < n; i++) {
+        	
+            if (sum == 0) start = i; // starting index 
+            //Everytime we are start sum with 0 we ar starting sub arry calculation
+
+            sum += arr[i];
+            
+            //Everytime we are changing MAXI we are closing in on a sub array
+            if (sum > maxi) {
                 maxi = sum;
-                end = i;
+
+                ansStart = start;
+                ansEnd = i;
             }
-            if(sum < 0){
+
+            // If sum < 0: discard the sum calculated
+            if (sum < 0) {
                 sum = 0;
-                start = i+1;
             }
         }
-        System.out.println("Start = " + start + "\nEnd = "+ end);
-        return maxi;    
+      //printing the subarray:
+        System.out.print("The subarray is: [");
+        for (int i = ansStart; i <= ansEnd; i++) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.print("] \n sum:");
+        return maxi;
     }
     
     public int[][] mergeSubintervals(int[][] intervals) {
@@ -233,6 +249,33 @@ public class Arrays1 {
        return res.toArray(new int[0][]);
     }
     
+    public int[][] mergeSubintervals2(int[][] intervals) {
+        List<int[]> res = new ArrayList<>();
+        System.out.println("Before Sorting");
+        printIntervals(intervals);
+        if(intervals.length == 0 || intervals == null) 
+            return res.toArray(new int[0][]);
+        
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+        System.out.println("After Sorting");
+        printIntervals(intervals);
+        
+        
+        for(int[] i : intervals) {
+            if(res.isEmpty() ||  i[0] > res.get(res.size()-1)[1] ) {
+            	res.add(i);
+            }
+            else {
+            	int[] last = res.get(res.size()-1);
+             	last[1] = Math.max(i[1],last[1]);
+            }
+        }        
+        
+        System.out.println("Result:");
+        printIntervals(res.toArray(new int[0][]));
+       return res.toArray(new int[0][]);
+    }
+    
     void printIntervals(int[][] intervals) {
     	for(int[] i: intervals) {
     		System.out.print(i[0] + "  " + i[1] + "||");
@@ -246,7 +289,7 @@ public class Arrays1 {
 		// we can use hashing for O(n),O(n)  , But below methd is O(n) Linked list cycle method
 		System.out.println("Duplicate element:" +arrays.findDuplicate(new int[]{1,3,4,2,5,8,1,7,6}));
 		
-		System.out.println("\n2. Sort an array of 0’s 1’s 2’s without using extra space or sorting algo");
+		System.out.println("\n2. Sort an array of 0ï¿½s 1ï¿½s 2ï¿½s without using extra space or sorting algo");
 		//can use counting for O(N) + O(N) but below is optimised
 		arrays.sortColors(new int[] {2,0,2,1,1,0}); //O(n)
 		
@@ -263,6 +306,12 @@ public class Arrays1 {
 		// O(m*n)
 		arrays.merge2(new int[] {1,4,7,8,10}, 5, new int[] {2,3,9}, 3);
 		
+		/*
+		 * Max sum subarray
+		 * Kadane Algo says that I don't care about any sum resulting less that 0
+		 * as it reduces the sum 
+		 * So, I'll ignore the sum till now
+		 */
 		System.out.println("\n\n5. Kadane's Algo :");
 		System.out.println(arrays.maxSubArray(new int[] {-2,1,-3,4,-1,2,1,-5,4}));
 		
@@ -277,7 +326,7 @@ public class Arrays1 {
 		intervals[6] = new int[]{8,9};
 		intervals[7] = new int[]{8,10};
 
-		arrays.mergeSubintervals(intervals);
+		arrays.mergeSubintervals2(intervals);
 		
 	}
 }

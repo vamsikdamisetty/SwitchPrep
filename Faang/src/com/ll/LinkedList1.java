@@ -79,62 +79,32 @@ public class LinkedList1 {
 	        return slow;
 	    }
 
-        public Node mergeTwoLists(Node list1, Node list2) {
-            
-            if(list1 == null) return list2;
-            if(list2 == null) return list1;
-        	
-            Node temp = null;
-            if(list1.data > list2.data){
-                temp = list1;
-                list1 = list2;
-                list2 = temp;
-            }
-            
-        	Node curr1 = list1;
-        	Node prev = list1;
-        	Node curr2 = list2;
-        	
-            
-            while(curr1 != null && curr2 != null){
-                if(curr1.data > curr2.data){
-                        temp = curr2.next;
-                        prev.next = curr2;
-                        curr2.next = curr1;
-                        prev = curr2;
-                        curr2 = temp;
-                }else{
-                    prev = curr1;
-                    curr1 = curr1.next;
-                    
-                }
-            }
-            /* another way just loop through the 2nd list till element is small
-             while(curr1 != null && curr2 != null){
-            if(curr1.val > curr2.val){
-                    prev.next = curr2;
-                    while(curr2.next != null && curr2.next.val < curr1.val)
-                        curr2 = curr2.next;
-                        
-                    prev = curr2;
-                    curr2 = curr2.next;
-                    prev.next = curr1;
-                    prev = curr1;
-                
-            }else{
-                prev = curr1;
-            }
-            curr1 = curr1.next;
-        	}
-             */
-            
-            if(curr2 != null){
-            	prev.next = curr2;
-            }
-            
-            return list1;
-            
-        }
+      
+		public Node mergeTwoLists(Node list1, Node list2) {
+
+			Node dummy = new Node(0);
+			Node temp = dummy;
+			while(list1 != null && list2!= null) {
+				if(list1.data <= list2.data) {
+					temp.next = list1;
+					list1 = list1.next;
+				}else {
+					temp.next = list2;
+					list2 = list2.next;
+				}
+				temp = temp.next;
+			}
+			
+			if(list1 != null) {
+				temp.next = list1;
+			}
+			
+			if(list2 != null) {
+				temp.next = list2;
+			}
+			
+			return dummy.next;
+		}
         
         public Node removeNthFromEnd(Node head, int n) {
         	Node fast = head;

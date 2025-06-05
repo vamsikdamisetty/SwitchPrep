@@ -13,30 +13,34 @@ public class TwoPointer {
 		List<List<Integer>> triplets = new LinkedList<>();
 
 		for (int i = 0; i < nums.length - 2; i++) {
-
-			if (i == 0 || nums[i] != nums[i - 1]) {
-
-				int low = i + 1, high = nums.length - 1, sum = 0 - nums[i];
-
-				while (low < high) {
-					if (nums[low] + nums[high] == sum) {
-
-						triplets.add(Arrays.asList(nums[i], nums[low], nums[high]));
-
-						while (low < high && nums[low] == nums[low + 1])
-							low++;
-
-						while (low < high && nums[high] == nums[high - 1])
-							high--;
-
-						low++;
-						high--;
-
-					} else if (nums[low] + nums[high] < sum) {
-						low++;
-					} else {
-						high--;
-					}
+			
+			//Avoiding duplicates by moving i to new elements as we would have already made triplets with it
+			if(i!=0 && nums[i] == nums[i-1]) continue;
+			
+			
+			int j = i + 1, k = nums.length - 1;
+			
+			//fixing nums[i] and moving j,k to make triplets
+			while (j < k) {
+				int sum = nums[i] + nums[j] + nums[k];
+				/*
+				 * if sum is less than 0 we need increase the value hence moving j++
+				 *  if sum is greater than 0 we need decrease the value hence moving k--
+				 */
+				if (sum < 0) {
+					j++;
+				} else if (sum > 0) {
+					k--;
+				} else {
+					List<Integer> triplet = Arrays.asList(nums[i], nums[j], nums[k]);
+					triplets.add(triplet);
+					j++;
+					k--;
+					//Avoiding duplicates by moving j,k to new elements as we already made triplets
+					while (j < k && nums[j] == nums[j - 1])
+						j++;
+					while (j < k && nums[k] == nums[k + 1])
+						k--;
 				}
 			}
 		}
@@ -156,6 +160,13 @@ public class TwoPointer {
 		
 		TwoPointer tp = new TwoPointer();
 		
+		/*
+		 * Below is the optimal 2 pointer approach 
+		 * But the better than brute force approach is
+		 * Using HashSet
+		 * Look at the link or video
+		 * https://takeuforward.org/data-structure/3-sum-find-triplets-that-add-up-to-a-zero/
+		 */
 		System.out.println("3. 3 sum");  //O(n^2) + O(nlogn) = O(n^2)  space : O(1)
 		System.out.println("List of Triplets: " + threeSum(new int[] {-1,0,1,2,-1,-4}));
 	

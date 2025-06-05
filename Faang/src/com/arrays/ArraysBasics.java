@@ -93,7 +93,7 @@ public class ArraysBasics {
 
 		return -1;
 	}
-	
+
 	public static boolean checkEqual(int[] a, int[] b) {
 		if (a.length != b.length) {
 			return false; // Arrays must have the same length
@@ -119,69 +119,98 @@ public class ArraysBasics {
 
 		return freqMap.isEmpty(); // If all elements matched, the map should be empty
 	}
-	
+
 	/*
 	 * Given an array arr[] of positive integers and another integer target.
 	 * Determine if there exists two distinct indices such that the sum of there
 	 * elements is equals to target.
 	 */
 	boolean twoSum(int arr[], int target) {
-        
+
 		Arrays.sort(arr);
-		
-		int l=0;
-		int r=arr.length -1;
-		
-		while(l<r) {
+
+		int l = 0;
+		int r = arr.length - 1;
+
+		while (l < r) {
 			int sum = arr[l] + arr[r];
-			if(sum == target)
+			if (sum == target)
 				return true;
-						
-			if(sum > target) {
+
+			if (sum > target) {
 				r--;
-			}else {
+			} else {
 				l++;
 			}
 		}
-		
+
 		return false;
-		
-    }
-	
+
+	}
+
 	public static List<Integer> frequencyCount(int[] arr) {
-		
+
 		Integer[] result = new Integer[arr.length];
-		
+
 		for (int i = 0; i < arr.length; i++) {
 			result[i] = 0;
 		}
-		
+
 		for (int i = 0; i < arr.length; i++) {
 			int x = arr[i];
-			result[x-1] = result[x-1] + 1; 
+			result[x - 1] = result[x - 1] + 1;
 		}
-		
+
 		return Arrays.asList(result);
-		
+
 	}
-	
+
 	public static int firstRepeated(int[] arr) {
-        Map<Integer, Boolean> hm = new HashMap<Integer, Boolean>();
-        
-        int fre=0;
-        for(int i=arr.length -1;i>=0;i--) {
-        	
-        	if(hm.containsKey(arr[i])) {
-        		fre = arr[i];
-        	}else {
-        		hm.put(arr[i], true);
-        	}
-        		
-        }
-        return fre;
-    }
-	
-	
+		Map<Integer, Boolean> hm = new HashMap<Integer, Boolean>();
+
+		int fre = 0;
+		for (int i = arr.length - 1; i >= 0; i--) {
+
+			if (hm.containsKey(arr[i])) {
+				fre = arr[i];
+			} else {
+				hm.put(arr[i], true);
+			}
+
+		}
+		return fre;
+	}
+
+	public static int[] productExceptSelf(int arr[]) {
+		int[] res = new int[arr.length];
+		int product = 1;
+		for (int i = 0; i < res.length; i++) {
+			product *= arr[i];
+		}
+
+		for (int i = 0; i < res.length; i++) {
+			res[i] = product / arr[i];
+		}
+
+		return res;
+	}
+
+	public static int maxSubarray(int[] nums) {
+
+		if (nums.length == 0)
+			return 0;
+
+		int maxSum = nums[0];
+		int currentSum = nums[0];
+
+		for (int i = 1; i < nums.length; i++) {
+			currentSum = Math.max(nums[i], currentSum + nums[i]); // either take current element or extend
+			maxSum = Math.max(maxSum, currentSum); // update global max
+		}
+
+		return maxSum;
+	}
+
 	public static void main(String[] args) {
 		ArraysBasics arraysBasics = new ArraysBasics();
 
@@ -223,7 +252,7 @@ public class ArraysBasics {
 		 */
 		int ep = arraysBasics.findEquilibrium(new int[] { 2, 3, 1, 2, 3 });
 		System.out.println(" equilibrium point:: " + ep);
-	
+
 		System.out.println("\n6.Check Equal Arrays");
 		/*
 		 * Given two arrays a[] and b[] of equal size, the task is to find whether the
@@ -235,13 +264,17 @@ public class ArraysBasics {
 		 * Note: If there are repetitions, then counts of repeated elements must also be
 		 * the same for two arrays to be equal.
 		 */
-		boolean ea = checkEqual(new int[] {1,2,2,5,1,6}, new int[]{6,5,2,1,1,2});
-		System.out.println("Arrays Equal : "+ ea);
-		
+		boolean ea = checkEqual(new int[] { 1, 2, 2, 5, 1, 6 }, new int[] { 6, 5, 2, 1, 1, 2 });
+		System.out.println("Arrays Equal : " + ea);
+
 		System.out.println("\n7. Frequency count:");
-		System.out.println(frequencyCount(new int[] {2,3,2,3,5}));
+		System.out.println(frequencyCount(new int[] { 2, 3, 2, 3, 5 }));
+
+		// Example 1: Simple case with positive and negative numbers
+        int[] inputCase1 = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
+        int result1 = maxSubarray(inputCase1);
+        System.out.println("\n 8: Max Sub ARray sum: " + Arrays.toString(inputCase1) + "\nResult: " + result1);  
 		
-		
-		
+
 	}
 }

@@ -4,10 +4,11 @@ public class BinarySearch {
 
   public static void main(String[] args) {
     int arr[]={1,2,3,4,5,6,7,8,9,10};
-    bsearch(arr,0,4,5);
+    bsearch(arr,0,arr.length-1,8);
   }
 
   private static void bsearch(int[] arr, int l, int r, int key) {
+	  
     if(l>r){
       System.out.println("Element not found");
       return;
