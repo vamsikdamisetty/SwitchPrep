@@ -12,6 +12,7 @@ public class ObjectPool<T extends Poolable> {
 		availablePool = new LinkedBlockingQueue<>();
 		for(int i=0; i< count;i++) {
 			availablePool.offer(creator.get());
+			System.out.println("Available Pool size " + availablePool.size());
 		}
 	}
 	

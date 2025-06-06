@@ -12,6 +12,9 @@ public class Client {
         Swordsman s2 = (Swordsman)s1.clone();
         System.out.println("Cloned swordsman"+s2);
         
+        General g = new General();
+        g.clone();
+        
 	}
 
 }
