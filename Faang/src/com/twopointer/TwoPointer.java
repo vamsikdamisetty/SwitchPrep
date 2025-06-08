@@ -1,5 +1,6 @@
 package com.twopointer;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -47,6 +48,45 @@ public class TwoPointer {
 		}
 		return triplets;
 	}
+	
+	/*
+	 * Similar to 3Sum two pointer approach
+	 */
+	public List<List<Integer>> fourSum(int[] nums, int target) {
+        Arrays.sort(nums);
+        int n=nums.length;
+        List<List<Integer>> res = new ArrayList<>();
+        for(int i=0;i < n;i++){
+            if(i!=0 && nums[i] == nums[i-1]) continue;
+
+            for(int f=i+1;f < n;f++){
+            	//i+1 as we don't want to consider for 1st element of the loop
+                if(f!=i+1 && nums[f] == nums[f-1]) continue;
+
+                int j = f+1;
+                int k = n-1;
+
+                while(j<k){
+                	//long and separate sum to handle integer overflow
+                    long sum = nums[i] + nums[f];
+                    sum += nums[j];
+                    sum += nums[k];
+                    if(sum < target){
+                        j++;
+                    } else if(sum > target){
+                        k--;
+                    } else{
+                        List<Integer> triplet = Arrays.asList(nums[i],nums[f],nums[j],nums[k]);
+                        res.add(triplet);
+                        j++;k--;
+                        while(j<k && nums[j] == nums[j-1]) j++;
+                        while(j<k && nums[k] == nums[k+1]) k--;
+                    }
+                }
+            }
+        }
+        return res;
+    }
 
 	public int removeDuplicates(int[] nums) {
 
