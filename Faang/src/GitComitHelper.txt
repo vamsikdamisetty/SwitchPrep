@@ -1,0 +1,42 @@
+To commit in Git using Git Bash, follow these steps:
+
+1. **Navigate to your project folder** (if you aren't already there):
+
+   ```bash
+   cd /path/to/your/repository
+   ```
+
+2. **Check the status** of your repository:
+
+   ```bash
+   git status
+   ```
+
+   This will show you the changes that have been made.
+
+3. **Add changes** to the staging area:
+
+   * To add specific files:
+
+     ```bash
+     git add <file_name>
+     ```
+   * To add all changes (new, modified, and deleted files):
+
+     ```bash
+     git add .
+     ```
+
+4. **Commit the changes** with a message:
+
+   ```bash
+   git commit -m "Your commit message"
+   ```
+
+5. **Push the changes** to the remote repository (if necessary):
+
+   ```bash
+   git push origin <branch_name>
+   ```
+
+Let me know if you need more details!

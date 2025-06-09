@@ -97,6 +97,124 @@ public class Hashing {
 		return lcs;
 	}
 
+	/*
+	 * intuition We keep the prefix sum and its index in HashMap if at any index i
+	 * sum is x and it is in HashMap Subarray length is i - hm.get(x); using this we
+	 * calculate the max subarray length with sum 0
+	 */
+	int maxLenSubarray(int arr[]) {
+		// code here
+		int sum = 0;
+		int maxi = 0;
+		Map<Integer, Integer> hm = new HashMap<>();
+
+		for (int i = 0; i < arr.length; i++) {
+			sum += arr[i];
+			if (sum == 0) {
+				maxi = i + 1;
+			} else {
+				if (hm.containsKey(sum)) {
+					maxi = Math.max(maxi, i - hm.get(sum));
+				} else {
+					hm.put(sum, i);
+				}
+			}
+		}
+		return maxi;
+	}
+
+	/*
+	 * Intuition How many sub arrays will end at index i with sum = k ? No of sub
+	 * arrays that had sum -> (curr_sum-k) before the index i
+	 */
+	public int findAllSubarraysWithGivenSum(int arr[], int k) {
+		int n = arr.length; // size of the given array.
+		Map<Integer, Integer> mpp = new HashMap();
+		int preSum = 0, cnt = 0;
+
+		mpp.put(0, 1); // Setting 0 in the map.
+		for (int i = 0; i < n; i++) {
+			// add current element to prefix Sum:
+			preSum += arr[i];
+
+			// Calculate x-k:
+			int remove = preSum - k;
+
+			// Add the number of subarrays to be removed:
+			cnt += mpp.getOrDefault(remove, 0);
+
+			// Update the count of prefix sum
+			// in the map.
+			mpp.put(preSum, mpp.getOrDefault(preSum, 0) + 1);
+		}
+		return cnt;
+	}
+
+	/*
+	 * Intuition How many sub arrays will end at index i with XOR = k ? No of sub
+	 * arrays that had XOR -> (curr_sum XOR k) before the index i
+	 */
+	public int subarraysWithXorK(int[] a, int k) {
+		int n = a.length; // size of the given array.
+		int xr = 0;
+		Map<Integer, Integer> mpp = new HashMap<>(); // declaring the map.
+		mpp.put(0, 1); // setting the value of 0.
+		int cnt = 0;
+
+		for (int i = 0; i < n; i++) {
+			// prefix XOR till index i:
+			xr = xr ^ a[i];
+
+			/*
+			 * x XOR k = xr (x XOR k) XOR k = xr XOR k As both k's cancel as XOR of same
+			 * elements is 0 x = xr XOR k
+			 */
+			// By formula: x = xr^k:
+			int x = xr ^ k;
+
+			// add the occurrence of xr^k
+			// to the count:
+			cnt += mpp.getOrDefault(x, 0);
+
+			// Insert the prefix xor till index i
+			// into the map:
+			mpp.put(xr, mpp.getOrDefault(xr, 0) + 1);
+
+		}
+		return cnt;
+	}
+
+	/*
+	 * intuition If we can keep track of last index of repeated char We can check
+	 * the max length
+	 */
+	public int lengthOfLongestSubstring(String s) {
+
+		Map<Character, Integer> mp = new HashMap<>();
+		int lls = 0;
+		int l = 0, r = 0;
+
+		while (r < s.length()) {
+			char c = s.charAt(r);
+
+			if (mp.containsKey(c)) {
+				// move l if the repeating character is inside the current window
+				// ex abcdba imagine you are at 2nd 'a' even though it's repeating but your l in
+				// window has already reached c
+				l = Math.max(l, mp.get(c) + 1);
+			}
+
+			mp.put(c, r);
+
+			// Upgate the length based on current window size
+			lls = Math.max(lls, r - l + 1);
+			r++;
+
+		}
+
+		return lls;
+	}
+
 	public static void main(String[] args) {
 
 		Hashing hashing = new Hashing();
@@ -148,5 +266,53 @@ public class Hashing {
 		int lcs = hashing.longestConsecutive(a);
 		System.out.println("The longest consecutive sequence is " + lcs);
 
+		/*
+		 * Time Complexity: O(N), as we are traversing the array only once
+		 * 
+		 * Space Complexity: O(N), in the worst case we would insert all array elements
+		 * prefix sum into our hashmap
+		 */
+		a = new int[] { 9, -3, 3, -1, 6, -5 };
+		System.out.print("\n\n4. Longest Subarray with 0 sum is");
+		int lsarrayLen = hashing.maxLenSubarray(a);
+		System.out.println(" " + lsarrayLen);
+
+		/*
+		 * Time Complexity: O(N), as we are traversing the array only once
+		 * 
+		 * Space Complexity: O(N), in the worst case we would insert all array elements
+		 * prefix sum into our hashmap
+		 */
+		arr = new int[] { 3, 1, 2, 4 };
+		int k = 6;
+		int cnt = hashing.findAllSubarraysWithGivenSum(arr, k);
+		System.out.println("\n\nThe number of subarrays with given sum is: " + cnt);
+
+		/*
+		 * 
+		 * Similar solution to above (Dry RUN MUST)
+		 * 
+		 * Time Complexity: O(N), as we are traversing the array only once
+		 * 
+		 * Space Complexity: O(N), in the worst case we would insert all array elements
+		 * prefix sum into our hashmap
+		 */
+		arr = new int[] { 4, 2, 2, 6, 4 };
+		k = 6;
+		cnt = hashing.subarraysWithXorK(arr, k);
+		System.out.println("\n\n5. The number of subarrays with XOR k is: " + cnt);
+
+		
+		/*
+		 * Main difference from above problem is we need to maintain a window here
+		 * Time Complexity: O( N )
+		 * 
+		 * Space Complexity: O(N) where N represents the size of HashSet where we are
+		 * storing our elements
+		 * 
+		 * 
+		 */
+		String str = "takeUforward";
+		System.out.println("\n\n6. The length of the longest substring without repeating characters is " +  hashing.lengthOfLongestSubstring(str));
 	}
 }
