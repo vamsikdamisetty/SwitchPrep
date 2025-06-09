@@ -302,9 +302,9 @@ public class Hashing {
 		cnt = hashing.subarraysWithXorK(arr, k);
 		System.out.println("\n\n5. The number of subarrays with XOR k is: " + cnt);
 
-		
 		/*
-		 * Main difference from above problem is we need to maintain a window here
+		 * Main difference from above problem is we need to maintain a window here 
+		 * 
 		 * Time Complexity: O( N )
 		 * 
 		 * Space Complexity: O(N) where N represents the size of HashSet where we are
@@ -313,6 +313,7 @@ public class Hashing {
 		 * 
 		 */
 		String str = "takeUforward";
-		System.out.println("\n\n6. The length of the longest substring without repeating characters is " +  hashing.lengthOfLongestSubstring(str));
+		System.out.println("\n\n6. The length of the longest substring without repeating characters is "
+				+ hashing.lengthOfLongestSubstring(str));
 	}
 }
