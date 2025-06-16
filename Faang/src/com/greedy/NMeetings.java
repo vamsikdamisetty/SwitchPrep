@@ -1,12 +1,18 @@
-package com.greedy;
+ package com.greedy;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 //TC :O (n) + O(nlogn) + O(n) -> O(nlogn)
 //SC : O(n) for since we used an additional data structure for storing the start time, end time
 public class NMeetings {
-
+	
+	/*
+	 * This and ActivitySelection are same
+	 * Intuition : To maximize the number of meeting we should take those meeting first which finish quickly
+	 * Sort the meeting based on ending time and see how many meetings can be accommodated
+	 */
 	public static void main(String args[]) {
 
 		   int n = 6;
@@ -23,15 +29,19 @@ public class NMeetings {
 		}
 
 //		list.sort((m1,m2)->m1.end-m2.end);
-		Collections.sort(list, (m1, m2) -> m1.end < m2.end ? -1 : 1);
+//		Collections.sort(list, (m1, m2) -> m1.end < m2.end ? -1 : 1);
+		//Sort expects a comparator and look at method def to understand
+		list.sort(Comparator.comparingInt(Meeting::getEnd));
+
+
 
 		int meetingCount = 0;
 		int endTime = -1;
 
 		for (Meeting meeting : list) {
-			if (meeting.start > endTime) {
+			if (meeting.getStart() > endTime) {
 				meetingCount++;
-				endTime = meeting.end;
+				endTime = meeting.getEnd();
 			}
 		}
 
@@ -40,8 +50,19 @@ public class NMeetings {
 }
 
 class Meeting {
-	int start;
-	int end;
+	public int start;
+	public int end;
+	
+	
+	public int getStart() {
+		return start;
+	}
+
+
+	public int getEnd() {
+		return end;
+	}
+
 
 	public Meeting(int start, int end) {
 		super();
