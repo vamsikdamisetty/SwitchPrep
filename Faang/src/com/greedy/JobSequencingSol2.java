@@ -55,23 +55,24 @@ public class JobSequencingSol2 {
 		return new ArrayList<Integer>(Arrays.asList(cntJobs, maxProfit));
 
 	}
+
+	class Job {
+		int deadline;
+		int profit;
+
+		public Job(int deadline, int profit) {
+			super();
+			this.deadline = deadline;
+			this.profit = profit;
+		}
+
+		public int getDeadline() {
+			return deadline;
+		}
+
+		public int getProfit() {
+			return profit;
+		}
+	}
 }
 
-class Job {
-	int deadline;
-	int profit;
-
-	public Job(int deadline, int profit) {
-		super();
-		this.deadline = deadline;
-		this.profit = profit;
-	}
-
-	public int getDeadline() {
-		return deadline;
-	}
-
-	public int getProfit() {
-		return profit;
-	}
-}

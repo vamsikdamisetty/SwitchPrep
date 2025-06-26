@@ -38,58 +38,13 @@ public class Rec3 {
         r.subsetSum2(nums, nums.length, 0, ds,al);
         
         System.out.println(al);
-		
-        System.out.println("\n\nPrint permutaions::"); 
-        //O(n! * n) n because everytime we are looping till array length
-        //space O(n) generate permutaitos
-        ds = new ArrayList<>();
-        
-        int [] arr = {1,2,3};
-        r.permutations(arr, arr.length, 0, ds);
-        
-        System.out.println("Method 2:");
-        //Using this for String as it is difficukt to swap in strings
-        //O(n! * n) space: O(n)Marked array + O(n) generate permutaitos
-        String str = "ABCD";
-        List<String> stringList = new ArrayList<>(); 
-        r.permute2(str, new boolean[str.length()], "", stringList);
-        
-        System.out.println(stringList);
         
 	}
 	
-	void permute2(String str,boolean[] marked,String osf,List<String> al) {
-		
-		if(osf.length() == str.length()) {
-			al.add(osf);
-			return;
-		}
-		
-		for(int i=0;i<str.length();i++) {
-			
-			if(!marked[i]) {
-				marked[i] = true;
-				permute2(str, marked, osf + str.charAt(i), al);
-				marked[i] = false;
-			}
-		}
-	}
 	
-	void permutations(int[] arr,int n,int i,List<Integer> ds) {
-		
-		if(ds.size()==n) {
-			System.out.println(ds);
-		}
-		
-		for(int j=i;j<n;j++) {
-			Arrays1.swapInArray(arr, i, j);
-			ds.add(arr[i]);
-			permutations(arr,n,i+1,ds);
-			ds.remove(ds.size()-1);
-			Arrays1.swapInArray(arr, i, j);
-		}
-	}
-	
+	/*
+	 * Index Selection Approach
+	 */
 	void subsetSum(int[] a,int n,int i,int sum,List<Integer> ll) {
 		ll.add(sum);
 		for(int j=i;j<n;j++) {
@@ -97,6 +52,9 @@ public class Rec3 {
 		}
 	}
 	
+	/*
+	 * Pick/ Not Pick approach
+	 */
 	void subsetSum1(int[] a,int n,int i,int sum,List<Integer> ll) {
 		
 		if(i == n) {
@@ -105,13 +63,15 @@ public class Rec3 {
 		}
 		
 
-		int num = a[i];
-		sum += num;
-		subsetSum1(a, n, i+1, sum, ll);
-		sum -= num;
+		subsetSum1(a, n, i+1, sum+a[i], ll);		
 		subsetSum1(a, n, i+1, sum, ll);
 	}
 	
+	/*
+	 * DIfference between Combinations sum and subset sum?
+	 * Comb :: Only unique combinations that sum to target
+	 * Subset :: All unique subsets (no sum constraint)
+	 */
     void subsetSum2(int[] a,int n,int i,List<Integer> ll,List<List<Integer>> al) {
 
     al.add(new ArrayList<>(ll));

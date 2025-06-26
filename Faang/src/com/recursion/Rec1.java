@@ -25,26 +25,41 @@ public class Rec1 {
  		r.revArray(a, 0, 8);
  		Arrays1.printArray(a);
  		
- 		System.out.println("\n\nPalindrome : "+ r.palindrome(0, new char[] {'M','A','D','A','M','M'}, 6));
+ 		System.out.println("\n\nPalindrome : "+ r.palindrome(0, new char[] {'M','A','D','A','M',}, 4));
 	
- 		System.out.println("\n\n Fib : " + r.fib(10));
+ 		System.out.println("\n\n Fib : " + r.fib(1));
 	}
 	
+	/*
+	 * Zero-based indexing (most common in programming)
+	 * fib(0) = 0  
+	 * fib(1) = 1 
+	 */
 	int fib(int n) {
 		if(n <= 1) return n;
 		
 		return fib(n-1) + fib(n-2);
 	}
 	
+	/*
+	 * One-based indexing (common in math)
+	 * fib(1) = 0
+	 * fib(2) = 1
+	 */
+	int fib2(int n) {
+        if (n == 1) return 0; // 1st Fibonacci number
+        if (n == 2) return 1; // 2nd Fibonacci number
+        return fib(n - 1) + fib(n - 2);
+    }
 	
-	boolean palindrome(int i,char[] arr,int n) {
+	boolean palindrome(int i,char[] arr,int j) {
 		
-		if(i >= n/2) return true;
+		if(i >= j) return true;
 		
-		if(arr[i] != arr[n-i-1])
+		if(arr[i] != arr[j])
 			return false;
 		
-		return palindrome(i+1, arr, n);
+		return palindrome(i+1, arr, j-1);
 	}
 	
 	void revArray(int[] a,int i,int j) {

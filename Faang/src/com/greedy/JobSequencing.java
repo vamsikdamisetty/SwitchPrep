@@ -3,18 +3,12 @@ package com.greedy;
 import java.util.Arrays;
 import java.util.Iterator;
 
-class Job {
-	int id, profit, deadline;
 
-	Job(int x, int y, int z) {
-		this.id = x;
-		this.deadline = y;
-		this.profit = z;
-	}
-}
 
 public class JobSequencing {
-
+	
+	
+	
 	public static void main(String[] args) {
 		Job[] arr = new Job[4];
 		arr[0] = new Job(1, 4, 20);
@@ -60,6 +54,17 @@ public class JobSequencing {
 		int[] ans = {cnt,profit};
 		
 		return ans;
+	}
+	
+	static class Job {
+		int id, profit, deadline;
+
+		public Job(int x, int y, int z) {
+			super();
+			this.id = x;
+			this.deadline = y;
+			this.profit = z;
+		}
 	}
 
 }

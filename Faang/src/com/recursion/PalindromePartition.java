@@ -3,11 +3,11 @@ package com.recursion;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rec4 {
+public class PalindromePartition {
 
 	public static void main(String[] args) {
 		
-		Rec4 r= new Rec4();
+		PalindromePartition r= new PalindromePartition();
 		/*
 		 	Time Complexity: O( (2^n) *k*(n/2) )
 

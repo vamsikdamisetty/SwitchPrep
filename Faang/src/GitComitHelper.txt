@@ -38,5 +38,3 @@ To commit in Git using Git Bash, follow these steps:
    ```bash
    git push origin <branch_name>
    ```
-
-Let me know if you need more details!

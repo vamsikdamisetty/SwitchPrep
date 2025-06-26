@@ -39,6 +39,11 @@ public class MinimumPlatforms {
 	 * The total platforms needed at one time can be found by taking the difference
 	 * between arrivals and departures at that time and the maximum value of all
 	 * times will be the final answer.
+	 * 
+	 * Time Complexity: O(nlogn) (Sorting takes O(nlogn) and traversal of arrays
+	 * takes O(n) so overall time complexity is O(nlogn)).
+	 * 
+	 * Space complexity: O(1) (No extra space used).
 	 */
 	static int findPlatform(int arr[], int dep[], int n) {
 		Arrays.sort(arr);
@@ -48,13 +53,14 @@ public class MinimumPlatforms {
 		int platsUsed = 0;
 		int j = 0;
 		for (int i = 0; i < arr.length; i++) {
-			
-			//Check for every arrival time how many trains can departure
+
+			// Check for every arrival time how many trains can departure and reduce the
+			// platforms used
 			while (j < dep.length && dep[j] < arr[i]) {
 				j++;
 				platsUsed--;
 			}
-			
+
 			platsUsed++;
 			maxPlats = Math.max(platsUsed, maxPlats);
 
