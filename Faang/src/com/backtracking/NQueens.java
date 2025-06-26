@@ -15,7 +15,7 @@ public class NQueens {
          * Space Complexity: O( N^2 )
          */
 		NQueens nq = new NQueens();
-		int N = 4;
+		int N = 5;
         List < List < String >> queen = nq.solveNQueens(N);
         int i = 1;
         for (List < String > it: queen) {
@@ -39,32 +39,61 @@ public class NQueens {
             }
         }
         
+        // Start placing queens from the first column (col = 0)
         placeQueens(n,0,board,res);
         
         return res;
     }
     
+    /**
+     * Recursive method to try placing queens column by column.
+     *
+     * @param n     The size of the board (n x n)
+     * @param col   The current column where we are placing a queen
+     * @param board The current board configuration
+     * @param res   The result list storing valid board arrangements
+     */
     void placeQueens(int n,int col,char[][] board,List<List<String>> res){
         
+    	// Base case: all queens are placed successfully
         if(col == n){
             addSolution(n,board,res);
             return;
         }
         
+        // Try placing a queen in every row of the current column
         for(int row=0;row<n;row++){
             if(isSafeForQ(board,row,col)){
+            	// Place the queen
                 board[row][col] = 'Q';
-                placeQueens(n,col+1,board,res);
+
+                // Recur to place the next queen in the next column
+                placeQueens(n, col + 1, board, res);
+
+                // Backtrack: remove the queen and try next possibility
                 board[row][col] = '.';
             }
         }
     }
     
+    /**
+     * Checks if placing a queen at board[row][col] is safe.
+     * If we can make sure below 3 things we are safe to place Queen
+     * 1. Upper-left diagonal
+     * 2. left
+     * 3. Lower-left diagonal
+     *
+     * @param board The current board state
+     * @param row   The row index
+     * @param col   The column index
+     * @return      True if safe, otherwise false
+     */
     boolean isSafeForQ(char[][] board, int row,int col){
         
-        int tRow = row;
-        int tCol = col;
+        int tRow = row-1;
+        int tCol = col-1;
         
+        // Check upper-left diagonal
         while(tRow>=0 && tCol >= 0){
             if(board[tRow][tCol] == 'Q') return false;
             tRow--;
@@ -72,16 +101,18 @@ public class NQueens {
         }
         
         tRow = row;
-        tCol = col;
+        tCol = col-1;
         
-        
+        // Check left side (same row)
         while(tCol >= 0){
             if(board[tRow][tCol] == 'Q') return false;
             tCol--;
         }
         
-        tCol = col;
+        tRow = row+1;
+        tCol = col-1;
         
+        // Check lower-left diagonal
         while(tRow < board.length && tCol >= 0){
             if(board[tRow][tCol] == 'Q') return false;
             tRow++;
