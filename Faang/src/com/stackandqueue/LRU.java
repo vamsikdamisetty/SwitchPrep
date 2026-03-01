@@ -3,11 +3,51 @@ package com.stackandqueue;
 import java.util.HashMap;
 import java.util.Map;
 
-// Least Recently Used (LRU) cache.
 /*
- * get - > O(1)
- * put - > O(1)
- */
+LRU Cache (Least Recently Used) — O(1) get & put
+
+Data Structures:
+- HashMap<key, Node> → fast lookup
+- Doubly Linked List → maintains usage order
+    head <-> most recently used (MRU)
+    tail <-> least recently used (LRU)
+
+Core Idea:
+- On every access (get/put), move node to front (MRU)
+- When capacity is full → remove node before tail (LRU)
+
+Operations:
+get(key):
+- If exists → remove from current position → insert at head → return value
+- Else → return -1
+
+put(key, value):
+- If key exists → remove old node
+- If capacity full → remove LRU (tail.prev)
+- Insert new node at head
+
+Helper Methods:
+remove(node):
+- Remove node from DLL + map
+
+insert(node):
+- Insert right after head (mark as most recently used) + update map
+
+Why Doubly Linked List?
+- O(1) removal (have prev pointer)
+- O(1) insertion at head
+
+Why HashMap?
+- O(1) access to nodes
+
+Overall Complexity:
+- get → O(1)
+- put → O(1)
+
+Key Insight:
+- head.next → most recently used
+- tail.prev → least recently used (eviction happens here)
+*/
 public class LRU {
 
 	public static void main(String[] args) {

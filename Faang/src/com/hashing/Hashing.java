@@ -15,6 +15,9 @@ public class Hashing {
 	 * Idea is to keep adding visited elements into hashmap so that Here instead of
 	 * using a loop, we will use the HashMap to check if the other element i.e.
 	 * target-(selected element) exists.
+	 *
+	 * Given an array of integers nums and an integer target,
+	 * return indices of the two numbers such that they add up to target
 	 */
 	public int[] twoSum(int[] nums, int target) {
 
@@ -65,6 +68,10 @@ public class Hashing {
 		return ans;
 	}
 
+	/*
+	[100,4,200,1,3,2]  -> LCS : 4 [1,2,3,4]
+	Order not required
+	 */
 	public int longestConsecutive(int[] nums) {
 
 		if (nums.length == 0)
@@ -107,9 +114,12 @@ public class Hashing {
 		int sum = 0;
 		int maxi = 0;
 		Map<Integer, Integer> hm = new HashMap<>();
-
+//		hm.put(0,-1);
 		for (int i = 0; i < arr.length; i++) {
 			sum += arr[i];
+
+			// Either this check or initialize map with 0 sum ,-1 index
+			// This is to check if the sum is becoming 0 from start of array
 			if (sum == 0) {
 				maxi = i + 1;
 			} else {
@@ -152,7 +162,7 @@ public class Hashing {
 
 	/*
 	 * Intuition How many sub arrays will end at index i with XOR = k ? No of sub
-	 * arrays that had XOR -> (curr_sum XOR k) before the index i
+	 * arrays that had XOR -> (curr_xor XOR k) before the index i
 	 */
 	public int subarraysWithXorK(int[] a, int k) {
 		int n = a.length; // size of the given array.
@@ -187,6 +197,8 @@ public class Hashing {
 	/*
 	 * intuition If we can keep track of last index of repeated char We can check
 	 * the max length
+	 * “I maintain a sliding window and a hashmap of last seen indices.
+	* When I see a duplicate inside the window, I move the left pointer just after its previous occurrence.”
 	 */
 	public int lengthOfLongestSubstring(String s) {
 
@@ -235,7 +247,7 @@ public class Hashing {
 		List<List<Integer>> anss = hashing.fourSum(nums, target);
 		System.out.println("\n\n2. Four SUM::");
 		/*
-		 * Time Complexity: O(N3*log(M)), where N = size of the array, M = no. of
+		 * Time Complexity: O(N^3*log(M)), where N = size of the array, M = no. of
 		 * elements in the set. Reason: Here, we are mainly using 3 nested loops, and
 		 * inside the loops there are some operations on the set data structure which
 		 * take log(M) time complexity.
@@ -287,6 +299,18 @@ public class Hashing {
 		int k = 6;
 		int cnt = hashing.findAllSubarraysWithGivenSum(arr, k);
 		System.out.println("\n\nThe number of subarrays with given sum is: " + cnt);
+
+		/*
+			Why do we add count instead of just +1?
+			Because:
+			Same prefix sum may occur multiple times.
+			Multiple overlapping sub arrays exist.
+			That’s why we store frequency, not just presence.
+		 */
+		arr = new int[] { 1, -1, 1, -1 };
+		k = 0;
+		cnt = hashing.findAllSubarraysWithGivenSum(arr, k);
+		System.out.println("\n\nThe number of subarrays with given sum is: (Multiple overlapping subarrays)" + cnt);
 
 		/*
 		 * 
