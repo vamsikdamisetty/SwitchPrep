@@ -212,7 +212,15 @@ public class LinkedList1 {
 		  ll.printList();
 		  ll.deleteNode(ll.head.next.next.next.next);
 		  ll.printList();
-		  
+
+		  /*
+		  			Example: 342 + 465 = 807
+					Stored as: 2→4→3 and 5→6→4 (least significant digit first)
+					Iteration 1: 2 + 5 = 7, carry = 0 → node(7)
+					Iteration 2: 4 + 6 = 10, carry = 1 → node(0)
+					Iteration 3: 3 + 4 + 1(carry) = 8, carry = 0 → node(8)
+					Result: 7→0→8 which represents 807 ✓
+		   */
 		  System.out.println("\n\n6. Add two numbers as LinkedList");
 		  LinkedList1 num1 = new LinkedList1();
 		  num1.push(9);

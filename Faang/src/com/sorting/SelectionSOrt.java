@@ -3,6 +3,11 @@ package com.sorting;
 
 public class SelectionSOrt {
 	//THis algo finds min index and swaps I wilth min_Index
+  /*
+    Find minimum → place at correct position
+    Fewer swaps than bubble sort
+    Useful when swap is costly
+   */
   public static void main(String[] args) {
     int arr[] = {4, 2, 6, 1, 4,9,2,4,7,55,1,3,6};
     selectionSort(arr);

@@ -1,11 +1,6 @@
 package com.hashing;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import com.arrays.Arrays1;
 
@@ -33,6 +28,42 @@ public class Hashing {
 		}
 
 		return new int[] { 0, 0 };
+	}
+
+	/*
+			Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]]
+			such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+
+			Notice that the solution set must not contain duplicate triplets.
+	 */
+	public List<List<Integer>> threeSum(int[] nums) {
+		Arrays.sort(nums);
+		List<List<Integer>> result = new ArrayList<>();
+
+		int n = nums.length;
+
+		for(int i=0; i<n-2;i++){
+
+			if(i != 0 && nums[i] == nums[i-1]){
+				continue;
+			}
+
+			Set<Integer> seen = new HashSet<>();
+			int j=i+1;
+			while(j<n){
+				int compliment = - (nums[i] + nums[j]);
+
+				if(seen.contains(compliment)){
+					result.add(Arrays.asList(nums[i],nums[j],compliment));
+					// Skip duplicates for the third element
+					while (j + 1 < nums.length && nums[j] == nums[j + 1]) j++;
+				}
+				seen.add(nums[j]);
+				j++;
+
+			}
+		}
+		return result;
 	}
 
 	public List<List<Integer>> fourSum(int[] nums, int target) {

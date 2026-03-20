@@ -2,6 +2,15 @@ package com.sorting;
 
 public class InsertionSort {
 
+	/*
+		Insert element in correct position like cards
+		Take element
+		Shift bigger elements right
+		Insert at correct spot
+
+		Very useful for nearly sorted arrays
+		Used inside TimSort (Java/Python)
+	 */
 	public static void main(String[] args) {
 		int arr[] = {4, 2, 6, 1, 4,9,2,4,7,55,1,3,6};
 	    insertionSort(arr);

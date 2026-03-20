@@ -3,6 +3,16 @@ package com.sorting;
 public class BubbleSort {
 //This algo is pushing Larger elements to the last
 //Optimized approach is interesting
+  /*
+    Big elements bubble to the end
+    second loop ends at -> n-i-1
+
+    optimized
+    No swaps in this traversal ? already sorted
+    if(swapped==false){
+        break;
+      }
+   */
   public static void main(String[] args) {
     int arr[] = {4,2,6,1,4};
     bubbleSort(arr);

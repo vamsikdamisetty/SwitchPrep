@@ -1,0 +1,87 @@
+Here’s a **clean, interview-ready comparison** of **Quick Sort vs Merge Sort (time complexity)** 👇
+
+---
+
+# ⚡ Quick Sort vs Merge Sort — Time Complexity
+
+## ⚡ Quick Sort
+
+### ⏱️ Time Complexity
+
+* **Best:** O(n log n)
+* **Average:** O(n log n)
+* **Worst:** ❗ O(n²)
+
+### 🧠 Why worst case happens?
+
+* Bad pivot choice (e.g., already sorted array)
+* Partition becomes **highly unbalanced** (1 vs n-1)
+
+👉 Recurrence in worst case:
+
+```
+T(n) = T(n-1) + O(n) → O(n²)
+```
+
+---
+
+## 🔀 Merge Sort
+
+### ⏱️ Time Complexity
+
+* **Best:** O(n log n)
+* **Average:** O(n log n)
+* **Worst:** ✅ O(n log n) (always)
+
+### 🧠 Why always O(n log n)?
+
+* Always divides array into **equal halves**
+* Merge step always takes **O(n)**
+
+👉 Recurrence:
+
+```
+T(n) = 2T(n/2) + O(n) → O(n log n)
+```
+
+---
+
+# 🔥 Side-by-Side Comparison
+
+| Case    | Quick Sort ⚡ | Merge Sort 🔀 |
+| ------- | ------------ | ------------- |
+| Best    | O(n log n)   | O(n log n)    |
+| Average | O(n log n)   | O(n log n)    |
+| Worst   | ❗ O(n²)      | ✅ O(n log n)  |
+
+---
+
+# 🧠 Key Insight (What interviewer expects)
+
+### ✅ Say this confidently:
+
+> “Quick sort is faster on average due to in-place partitioning and better cache locality, but merge sort guarantees O(n log n) even in the worst case because it always divides the array evenly.”
+
+---
+
+# ⚖️ When to Choose What
+
+### ⚡ Choose Quick Sort when:
+
+* Memory is limited (in-place)
+* You want **fast average performance**
+* Input is random
+
+### 🔀 Choose Merge Sort when:
+
+* Need **guaranteed performance**
+* Working with **linked lists**
+* Stability is required
+
+---
+
+# 🧠 One-line Memory Trick
+
+* ⚡ Quick Sort → *Fast but risky (pivot problem)*
+* 🔀 Merge Sort → *Stable and predictable*
+

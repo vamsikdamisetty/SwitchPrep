@@ -152,7 +152,12 @@ public class Arrays1 {
                 k--;
             }
         }
-        
+
+        /*
+            No while loop for I because
+            i array -> nums1 is what we are filling
+            they are already in place
+         */
         while(j != -1){
             nums1[k] = nums2[j];
             j--;
@@ -220,6 +225,22 @@ public class Arrays1 {
         }
         System.out.print("] \n sum:");
         return maxi;
+    }
+
+    public int maxProduct(int[] nums) {
+        int maxProd = nums[0];
+        int minProd = nums[0];
+        int result  = nums[0];
+
+        for (int i = 1; i < nums.length; i++) {
+            int tempMax = Math.max(nums[i], Math.max(maxProd * nums[i], minProd * nums[i]));
+            minProd     = Math.min(nums[i], Math.min(maxProd * nums[i], minProd * nums[i]));
+
+            maxProd = tempMax;
+            result  = Math.max(result, maxProd);
+        }
+
+        return result;
     }
     
     public int[][] mergeSubintervals(int[][] intervals) {
@@ -307,6 +328,13 @@ public class Arrays1 {
 		arrays.merge2(new int[] {1,4,7,8,10}, 5, new int[] {2,3,9}, 3);
 		
 		/*
+		Kadane's algorithm states:
+        The maximum subarray ending at the current index is either the current element alone,
+        or the current element extended from the best subarray ending at the previous index.
+         Two choices at every index:
+        - `nums[i]` → **start fresh** (previous subarray was a burden)
+        - `curr + nums[i]` → **extend** the previous subarray
+
 		 * Max sum subarray
 		 * Kadane Algo says that I don't care about any sum resulting less that 0
 		 * as it reduces the sum 
@@ -314,6 +342,22 @@ public class Arrays1 {
 		 */
 		System.out.println("\n\n5. Kadane's Algo :");
 		System.out.println(arrays.maxSubArray(new int[] {-2,1,-3,4,-1,2,1,-5,4}));
+
+        /*
+            Key Idea:
+
+            Unlike the maximum sum subarray, product has a tricky behavior:
+            Negative × Negative = Positive
+            Negative × Positive = Negative
+
+            So a minimum product can suddenly become maximum when multiplied by a negative number.
+            Because of this we track two values at every step:
+            maxProd → maximum product ending at current index
+            minProd → minimum product ending at current index (important for negatives)
+         */
+        System.out.println("Kadane, Max Product:");
+        System.out.println(arrays.maxProduct(new int[]{2,3,-2,4,-1}));
+
 		
 		System.out.println("\n\n6. Merge Overlapping Subintervals");
 		int[][] intervals = new int[8][];
@@ -326,7 +370,7 @@ public class Arrays1 {
 		intervals[6] = new int[]{8,9};
 		intervals[7] = new int[]{8,10};
 
-		arrays.mergeSubintervals2(intervals);
+		arrays.mergeSubintervals(intervals);
 		
 	}
 }

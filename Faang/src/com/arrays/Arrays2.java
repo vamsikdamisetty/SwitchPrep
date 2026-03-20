@@ -36,6 +36,9 @@ public class Arrays2 {
 		int m = matrix.length;
 		int n = matrix[0].length;
 
+		//matrix[0][0] is common for 0th column and 0th row
+		//hence tracking 0th column iin seperate variable
+
 		int col0 = 1;
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < n; j++) {
