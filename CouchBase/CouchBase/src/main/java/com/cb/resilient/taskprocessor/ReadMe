@@ -1,0 +1,28 @@
+1. Resilient Task Processor (Top Priority)
+Problem:
+
+Design a system where:
+
+    Tasks are processed by multiple workers
+    Failures are retried
+    No duplicate execution
+You MUST implement:
+    Thread pool
+    Retry logic
+    Idempotency handling
+
+
+I designed a multi-threaded task processor using a blocking queue and thread pool,
+ensured idempotency using a concurrent store,
+and implemented bounded retries with backoff to handle failures safely without duplicate execution
+
+
+
+    Tasks are processed by multiple workers -> ExecutorService
+    Failures are retried -> Math.Random Exception
+    No duplicate execution -> ConcurrentHashmap tracking of tasks
+You MUST implement:
+    Thread pool -> ExecutorService
+    Retry logic -> further retried after backoff sleep(attempt * 1000)
+    Idempotency handling-> ConcurrentHashmap tracking of tasks
+

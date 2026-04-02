@@ -1,0 +1,138 @@
+══════════════════════════════════════════════════════════════════
+  MinStack — Complete Logic Explanation
+  Date: March 26, 2026
+══════════════════════════════════════════════════════════════════
+
+PROBLEM
+───────
+Design a stack that supports:
+  push(val)   — push element onto stack
+  pop()       — remove top element
+  top()       — get top element
+  getMin()    — retrieve minimum element in O(1)
+
+All operations must run in O(1) time.
+
+──────────────────────────────────────────────────────────────────
+APPROACH 1 — Brute Force (Pair Stack)   Space: O(2N)
+──────────────────────────────────────────────────────────────────
+Store a pair at every position: (value, minimumSoFar)
+
+  push(-2)  →  [(-2, -2)]
+  push(1)   →  [(-2,-2), (1,-2)]
+  push(-3)  →  [(-2,-2), (1,-2), (-3,-3)]
+
+  getMin()  →  peek the second element of the top pair  → O(1)
+  top()     →  peek the first element of the top pair   → O(1)
+  pop()     →  just remove the top pair                 → O(1)
+
+  ✅ Works, but uses 2x space.
+
+──────────────────────────────────────────────────────────────────
+APPROACH 2 — Optimal (Flag Formula)     Space: O(N)
+──────────────────────────────────────────────────────────────────
+Use a single variable `mini` and encode "min changed here" info
+directly into the stored value using math. No extra pair needed.
+
+  KEY INSIGHT:
+    Only the moments when a NEW minimum is pushed matter.
+    At those moments, instead of storing the real value,
+    store a FLAG that is always < mini, so we can detect it later.
+
+────────────────────────────
+  PUSH LOGIC
+────────────────────────────
+  if stack is empty:
+      push(val)
+      mini = val
+
+  else if val >= mini:           ← min did NOT change
+      push(val)                  ← store real value
+
+  else (val < mini):             ← NEW minimum!
+      push(2*val - mini)         ← store FLAG  (always < val = new mini)
+      mini = val                 ← update mini
+
+  FLAG derivation:
+      flag = 2*val - oldMin
+           = val - (oldMin - val)
+      Since val < oldMin  →  (oldMin - val) > 0  →  flag < val
+      ∴ flag is ALWAYS less than the new mini  ✓
+
+────────────────────────────
+  POP LOGIC
+────────────────────────────
+  if s.peek() >= mini:           ← real value on top
+      just pop
+
+  if s.peek() < mini:            ← FLAG on top → min was set here
+      mini = 2*mini - s.peek()   ← RESTORE previous minimum
+      pop
+
+  Restoration derivation:
+      flag      = 2*newMin - oldMin
+      oldMin    = 2*newMin - flag
+               = 2*mini   - s.peek()   ✓
+
+────────────────────────────
+  TOP LOGIC
+────────────────────────────
+  if s.peek() >= mini:           ← real value
+      return s.peek()
+
+  if s.peek() < mini:            ← flag stored here, not real value
+      return mini                ← mini IS the actual top value
+
+  Why? When we stored a flag, we had val = mini (after update).
+  So the real pushed value equals the current mini.
+
+────────────────────────────
+  GET-MIN LOGIC
+────────────────────────────
+  Always return `mini` — it tracks the running minimum. O(1).
+
+──────────────────────────────────────────────────────────────────
+  STEP-BY-STEP TRACE  (using the main() test case)
+──────────────────────────────────────────────────────────────────
+
+  Operation    | val  | mini(before) | Stored in stack        | mini(after) | Stack state
+  -------------|------|--------------|------------------------|-------------|------------------------------
+  push(-2)     | -2   | MAX_VALUE    | -2  (empty→push real)  | -2          | [-2]
+  push(1)      |  1   | -2           | 1   (1 >= -2, real)    | -2          | [-2, 1]
+  getMin()     |  -   |  -           |  -                     |  -          | → -2  ✓
+  push(-3)     | -3   | -2           | 2*(-3)-(-2) = -4 (flag)| -3          | [-2, 1, -4]
+  push(4)      |  4   | -3           | 4   (4 >= -3, real)    | -3          | [-2, 1, -4, 4]
+  push(-3)     | -3   | -3           | -3  (-3 >= -3, real)   | -3          | [-2, 1, -4, 4, -3]
+  top()        |  -   |  -           | peek=-3, -3 >= -3 real |  -          | → -3  ✓
+  getMin()     |  -   |  -           |  -                     |  -          | → -3  ✓
+  pop(-3)      |  -   | -3           | peek=-3 >= mini, pop   | -3          | [-2, 1, -4, 4]
+  top()        |  -   |  -           | peek=4, 4 >= -3 real   |  -          | → 4   ✓
+  pop(4)       |  -   | -3           | peek=4 >= mini, pop    | -3          | [-2, 1, -4]
+  top()        |  -   |  -           | peek=-4 < -3 → FLAG    |  -          | → mini = -3  ✓
+  pop(flag)    |  -   | -3           | peek=-4 < mini → FLAG  |             |
+               |      |              | mini=2*(-3)-(-4) = -2  | -2          | [-2, 1]
+  top()        |  -   |  -           | peek=1, 1 >= -2 real   |  -          | → 1   ✓
+  pop(1)       |  -   | -2           | peek=1 >= mini, pop    | -2          | [-2]
+
+──────────────────────────────────────────────────────────────────
+  COMPLEXITY SUMMARY
+──────────────────────────────────────────────────────────────────
+  Operation | Time | Space
+  ----------|------|------
+  push      | O(1) | O(N)  (one value per push, not two)
+  pop       | O(1) | —
+  top       | O(1) | —
+  getMin    | O(1) | —
+
+──────────────────────────────────────────────────────────────────
+  QUICK RECALL CHEATSHEET
+──────────────────────────────────────────────────────────────────
+  PUSH new min  →  store (2*val - oldMin),  mini = val
+  POP a flag    →  mini = (2*mini - flag)
+  TOP a flag    →  return mini   (flag was stored when val==mini)
+  DETECT flag   →  element < mini
+
+  Flag formula proof:
+      flag < val  because  flag = val - (oldMin - val)  and  oldMin > val
+══════════════════════════════════════════════════════════════════
+

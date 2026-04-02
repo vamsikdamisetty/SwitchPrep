@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/** Singleton facade for library operations */
 public class LibraryManagementSystem {
 
     private static LibraryManagementSystem instance;
@@ -20,10 +21,12 @@ public class LibraryManagementSystem {
     private Map<String, Member> members = new HashMap<>();
     private Map<String, BookCopy> copies = new HashMap<>();
 
+    /** Private constructor for singleton */
     private LibraryManagementSystem() {
 
     }
 
+    /** Returns the singleton instance (thread-safe) */
     public synchronized static LibraryManagementSystem getInstance(){
         if(instance == null){
             instance = new LibraryManagementSystem();
@@ -31,6 +34,7 @@ public class LibraryManagementSystem {
         return instance;
     }
 
+    /** Creates and adds a library item with specified copies to the catalog */
     public LibraryItem addItem(ItemType type,String  id, String title, String author, int numCopies){
         LibraryItem item = ItemFactory.createItem(type,id,title,author);
         catalog.put(item.getId(),item);
@@ -44,16 +48,19 @@ public class LibraryManagementSystem {
     }
 
 
+    /** Registers a new member in the system */
     public Member addMember(String id,String name){
         Member member = new Member(id,name);
         this.members.put(member.getId(),member);
         return member;
     }
 
+    /** Searches catalog using the provided strategy pattern */
     public List<LibraryItem> search(String term, SearchStrategy strategy){
         return strategy.search(term,new ArrayList<>(catalog.values()));
     }
 
+    /** Checks out a book copy to a member */
     public void checkout(String memberId,String copyId){
         Member member = members.get(memberId);
         BookCopy copy = copies.get(copyId);
@@ -64,6 +71,7 @@ public class LibraryManagementSystem {
         }
     }
 
+    /** Prints all catalog items with availability info */
     public void printCatalog(){
         System.out.println("\n--- Library Catalog ---");
         for(LibraryItem item : catalog.values()){
@@ -73,6 +81,7 @@ public class LibraryManagementSystem {
         System.out.println("-----------------------\n");
     }
 
+    /** Returns a checked-out copy to the library */
     public void returnItem(String copyId){
         BookCopy copy = copies.get(copyId);
         if (copy != null) {
@@ -82,6 +91,7 @@ public class LibraryManagementSystem {
         }
     }
 
+    /** Places a hold on an item for a member (only if all copies checked out) */
     public void placeHold(String memberId,String itemId){
         Member member = members.get(memberId);
         LibraryItem item = catalog.get(itemId);

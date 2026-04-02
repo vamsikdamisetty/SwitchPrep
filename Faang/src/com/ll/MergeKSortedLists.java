@@ -3,6 +3,19 @@ package com.ll;
 import java.util.List;
 import java.util.PriorityQueue;
 
+/*
+naive Approach
+Time Complexity
+Let k = number of lists, n = total nodes across all lists.
+Merge step Cost
+merge(L1, L2)n/k + n/k = 2n/k nodes processed
+merge(result, L3)2n/k + n/k = 3n/k nodes processed
+merge(result, L4)4n/k nodes processed.
+... ..
+merge(result, Lk)n nodes processed
+Total = 2n/k + 3n/k + ... + n = O(nk)
+This is inefficient — early merged lists get re-traversed repeatedly
+ */
 public class MergeKSortedLists {
     public Node mergeTwoLists(Node list1, Node list2) {
 
@@ -41,6 +54,10 @@ public class MergeKSortedLists {
 
     /*
         Idea is to use MinHeap
+        Before that,
+        There's also a divide and conquer merge variant — pair up lists and merge in rounds like merge sort, also achieves O(n log k) without extra space
+
+
         Idea
 
                 Put the first node of each list into a Min Heap (PriorityQueue).
@@ -65,6 +82,12 @@ public class MergeKSortedLists {
                 N = total nodes
 
                 K = number of lists
+
+                Why log k vs k matters — if k=1000, n=10000:
+
+                Space O(k)
+                Naive: 10,000,000 operations
+                Heap: ~100,000 operations
      */
     Node mergeKListWithMinHeap(List<Node> lists){
         PriorityQueue<Node> minHeap = new PriorityQueue<>((a, b) -> a.data - b.data);

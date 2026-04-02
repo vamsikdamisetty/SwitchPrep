@@ -12,6 +12,7 @@ import com.lms.strategy.SearchByTitle;
 import java.util.List;
 
 public class LibraryManagementDemo {
+    /** Entry point - demonstrates library operations: search, checkout, return, and holds */
     public static void main(String[] args) {
         LibraryManagementSystem library = LibraryManagementSystem.getInstance();
 

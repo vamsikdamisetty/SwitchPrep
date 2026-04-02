@@ -1,0 +1,15 @@
+📄 StreamsCheatSheet.java — Comprehensive Reference (11 sections)
+Filter, Map, Collect — basics on user-defined Employee objects
+Sorting — single-field, multi-field, reversed, case-insensitive, by name length
+Reduce & Aggregate — sum, avg, min, max, count, summaryStatistics(), custom reduce
+Grouping & Partitioning — groupingBy with counting/averaging/mapping/maxBy, partitioningBy, custom buckets
+FlatMap — nested collections (employee skills), skill frequency, flattening arrays
+Collecting to Map — toMap, merge functions for duplicates, TreeMap, LinkedHashMap for ordering
+Distinct, Limit, Skip, TakeWhile, DropWhile — pagination pattern, top-K
+Find & Match — findFirst, findAny, anyMatch, allMatch, noneMatch
+String Joining — Collectors.joining with delimiters, prefix, suffix
+Complex Pipelines — 10 interview-style problems (2nd highest salary, top spender, dept analysis, Nth highest, etc.)
+Streams on Maps — filter/sort/transform map entries, swap keys/values, merge maps, word frequency, character frequency
+📄 StreamsQuickRef.java — Quick Copy-Paste Patterns (14 patterns)
+Frequency maps, top-K, dedup, index-based ops, Fibonacci generation, palindrome check, string reversal, Collectors.teeing, parallel streams, etc.
+Both files use user-defined classes (Employee, Order) with realistic data — exactly the kind of problems you'll see on Coding Signal. Good luck! 🚀

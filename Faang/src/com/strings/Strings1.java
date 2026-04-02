@@ -1,5 +1,6 @@
 package com.strings;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -14,7 +15,8 @@ public class Strings1 {
 		
 //		System.out.println("Plaindrome of a String");
 //		palindrome();
-		
+
+        //Expand from middle approach made more sense than DP
 		System.out.println("\n\n2. Longest Palindrome in a string"); //O(n^2) using DP 
 		//https://www.youtube.com/watch?v=UflHuQj6MVA
 		//If Brute force O(n^3) by going throw all substrings and checking palindrome
@@ -35,18 +37,20 @@ public class Strings1 {
 	}
 
 
-
+    // Preferred
 	private static String reverseWords(String s) {
 		String s1[]= s.split(" ");
+        Arrays.stream(s1).forEach(System.out::println);
         String res="";
 	    for(int i=s1.length-1;i>=0;i--){
-	    	if(!s1[i].trim().isEmpty()) {
+	    	if(!s1[i].trim().isEmpty()) { // this condition is to remove all empty words from res
 	    		res=res+s1[i]+" ";
 	    	}
 	    }
         return res.trim();
 	}
-	
+
+    // Unclear
     public static String reverseWords2(String s) {
         
         String out = "";
@@ -103,7 +107,11 @@ public class Strings1 {
         
         
     }
-    
+
+    /*
+    Dp solution
+    Expand around center solution looked better (below this)
+     */
     public static String longestPalindrome(String s) {
         int n = s.length();
         
@@ -147,24 +155,31 @@ public class Strings1 {
     
     /*
      * Liked the below solution
-     * 
-     * 
+     * Every palindrome has a center —
+     *  either a single character (odd length) or between two characters (even length).
+     * So expand outward from every possible center:
+     *
+     * O(n²) — n centers, each expands up to n times
+     * */
 class Solution {
     int maxLen = -1;
     int start = -1;
     public String longestPalindrome(String s) {
         for(int i = 0; i < s.length(); i++){
-            isPalindrome(s, i, i);
-            isPalindrome(s, i, i+1);
+            isPalindrome(s, i, i);  // odd  length — center is i
+            isPalindrome(s, i, i+1); // even length — center is between i and i+1
         }
         return s.substring(start, start+maxLen);
     }
     
     void isPalindrome(String s, int l, int r){
+        // Expand Around Center approach
         while(l >= 0 && r < s.length() && s.charAt(l) == s.charAt(r)){
             l--;
             r++;
         }
+
+        //After the while loop, `l` and `r` are **one step past** the palindrome boundary
         int len = r-l-1;
         if(len > maxLen){
             maxLen = len;
@@ -172,7 +187,7 @@ class Solution {
         }
     }
 }
-     */
+
     
     public static int romanToInt(String s) {
         HashMap<Character,Integer> map = new HashMap<>();
@@ -298,15 +313,20 @@ class Solution {
     }
     
     public static String longestCommonPrefix(String[] strs) {
-        
-        // if(strs.length == 0) return "";
+
+        if (strs.length == 0) return "";
+
+        //Start by assuming the entire first string is the answer:
         String lcp = strs[0];
-        
-        // if(lcp == "") return "";
-        for(int j=1;j<strs.length;j++){
-                        
-            while(strs[j].indexOf(lcp) != 0){
-                lcp = lcp.substring(0,lcp.length()-1);
+
+        if (lcp.equals("")) return "";
+
+        for (int j = 1; j < strs.length; j++) {
+            //For each string, ask — does lcp appear at the very start (index 0)
+            while (strs[j].indexOf(lcp) != 0) {
+                if (lcp.isEmpty()) return "";
+                //If not, keep trimming the last character off lcp until it fits:
+                lcp = lcp.substring(0, lcp.length() - 1);
             }
         }
         return lcp;

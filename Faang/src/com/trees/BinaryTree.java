@@ -1,10 +1,6 @@
 package com.trees;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 public class BinaryTree {
     
@@ -141,7 +137,7 @@ class IterativeTravarsal{
 		while(!stack.isEmpty()) {
 			TreeNode TreeNode = stack.pop();
 			preOrder.add(TreeNode.data);
-			if(TreeNode.right != null) stack.push(TreeNode.right);
+			if(TreeNode.right != null) stack.push(TreeNode.right); // Right first
 			if(TreeNode.left != null) stack.push(TreeNode.left);
 		}
 		
@@ -154,7 +150,7 @@ class IterativeTravarsal{
 		Stack<TreeNode> stack = new Stack<>();
 		TreeNode TreeNode = root;
 		while(true) {
-			if(TreeNode != null) {
+			if(TreeNode != null) { // keep pushing left into queue
 				stack.push(TreeNode);
 				TreeNode = TreeNode.left;
 			}else {
@@ -162,14 +158,18 @@ class IterativeTravarsal{
 					break;
 				}
 				TreeNode = stack.pop();
-				inOrder.add(TreeNode.data);
-				TreeNode = TreeNode.right;
+				inOrder.add(TreeNode.data); // add to inOrder
+				TreeNode = TreeNode.right; // Push only current node's right
 			}
 		}
 		
 		return inOrder; 
 	}
-	
+
+	/*
+		We are just doing pre-order and then reverse the list using stack
+		Adding simpler solution below
+	 */
 	List<Integer> postOrderTrav(TreeNode root){
 		if(root == null) return null;
 		List<Integer> postOrder = new ArrayList<>();
@@ -188,8 +188,31 @@ class IterativeTravarsal{
 		while(!stack2.isEmpty()) {
 			postOrder.add(stack2.pop().data);
 		}
+
 		
 		return postOrder; 
+	}
+
+	List<Integer> postOrderTrav2(TreeNode root){
+		if(root == null) return null;
+		List<Integer> postOrder = new ArrayList<>();
+		Stack<TreeNode> stack1 = new Stack<>();
+
+		stack1.push(root);
+		while(!stack1.isEmpty()) {
+			TreeNode TreeNode = stack1.pop();
+			postOrder.add(TreeNode.data);
+
+			if(TreeNode.left!= null) stack1.push(TreeNode.left);
+			if(TreeNode.right!= null) stack1.push(TreeNode.right);
+
+		}
+
+		//Instead of second stack just reverse
+		Collections.reverse(postOrder);
+
+
+		return postOrder;
 	}
 	
 }

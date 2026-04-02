@@ -56,5 +56,26 @@ public class SlidingWindowMax {
 		
 		return res;
     }
+
+	public int removeDuplicates(int[] nums){
+
+		if(nums.length < 1){
+			return nums.length;
+		}
+
+		int k = 1;
+
+		int i= 1;
+		for( ;i < nums.length;i++){
+
+
+			if( nums[i-1] == nums[i]) {
+				continue;
+			}
+
+			nums[k++] = nums[i];
+		}
+		return k;
+	}
     
 }

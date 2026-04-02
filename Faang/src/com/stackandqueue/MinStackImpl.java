@@ -14,20 +14,20 @@ public class MinStackImpl {
 		MinStack ms = new MinStack();
 		ms.push(-2);
 		ms.push(1);
-		System.out.println(ms.getMin());
+		System.out.println("Min " + ms.getMin());
 		ms.push(-3);
 		ms.push(4);
 		ms.push(-3);
-		System.out.println(ms.top());
-		System.out.println("Min" + ms.getMin());
-		System.out.println(ms.top());
+		System.out.println("Top " + ms.top());
+		System.out.println("Min " + ms.getMin());
+        System.out.println("Top " + ms.top());
 		ms.pop();
-		System.out.println(ms.top());
+        System.out.println("Top " + ms.top());
 		ms.pop();
-		System.out.println(ms.top());
+        System.out.println("Top " + ms.top());
 		ms.pop();
-		System.out.println("Min" + ms.getMin());
-		System.out.println(ms.top());
+        System.out.println("Top " + ms.top());
+        System.out.println("Top " + ms.top());
 		ms.pop();
 	}
 }
@@ -56,6 +56,7 @@ class MinStack {
                 s.push(val);
             }   
         }
+        System.out.println("Stack " + s);
     }
     
     public void pop() {

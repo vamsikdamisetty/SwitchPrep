@@ -4,12 +4,15 @@ import com.lms.model.BookCopy;
 import com.lms.model.Member;
 import com.lms.service.TransactionManagement;
 
+/** State when copy is currently on loan */
 public class CheckedOutState implements ItemState {
+    /** Invalid - item already checked out */
     @Override
     public void checkout(BookCopy copy, Member member) {
         System.out.println("Error: Item already under loan");
     }
 
+    /** Ends loan, transitions to OnHold or Available based on observers */
     @Override
     public void returnCopy(BookCopy copy) {
         TransactionManagement.getInstance().endLoan(copy);
@@ -22,6 +25,7 @@ public class CheckedOutState implements ItemState {
         }
     }
 
+    /** Adds member as observer for availability notification */
     @Override
     public void placeHold(BookCopy copy, Member member) {
         copy.getLibraryItem().addObserver(member);

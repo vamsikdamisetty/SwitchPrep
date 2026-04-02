@@ -5,8 +5,10 @@ import com.lms.model.BookCopy;
 import com.lms.model.Member;
 import com.lms.service.TransactionManagement;
 
+/** State when copy is reserved for a member who placed a hold */
 public class OnHoldState implements ItemState{
 
+    /** Only the member who placed the hold can checkout */
     @Override
     public void checkout(BookCopy copy, Member member) {
         // Only a member who placed the hold can check it out.
@@ -20,11 +22,13 @@ public class OnHoldState implements ItemState{
         }
     }
 
+    /** Invalid - item is on hold, not checked out */
     @Override
     public void returnCopy(BookCopy copy) {
         System.out.println("Invalid action. Item is on hold, not checked out.");
     }
 
+    /** Invalid - item already has a hold */
     @Override
     public void placeHold(BookCopy c, Member m) {
         System.out.println("Item is already on hold.");
