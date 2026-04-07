@@ -246,6 +246,21 @@ public class StreamsCheatSheet {
 
         List<Employee> emps = employees();
 
+        /*
+        In reduce, the identity value serves as the initial/starting value
+         of the accumulation and also acts as the identity element for the combining operation.
+
+         Key rules:
+        reduce(identity, accumulator) —
+        if the stream is empty, the identity is returned directly (no Optional needed)
+        The identity must satisfy: accumulator.apply(identity, x) == x for all x
+
+        // WITH identity → returns double (never empty, defaults to 0.0)
+double sum = stream.reduce(0.0, Double::sum);
+
+        // WITHOUT identity → returns Optional<Double> (stream could be empty)
+        Optional<Double> sum = stream.reduce(Double::sum);
+         */
         // Sum of all salaries using reduce
         double totalSalary = emps.stream()
                 .map(Employee::getSalary)
@@ -264,6 +279,7 @@ public class StreamsCheatSheet {
                 .average();
         System.out.println("Average salary: " + avgSalary.orElse(0.0));
 
+        OptionalDouble min = emps.stream().mapToDouble(Employee::getSalary).min();
         // Min salary employee
         Optional<Employee> minSalEmp = emps.stream()
                 .min(Comparator.comparingDouble(Employee::getSalary));

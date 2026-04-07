@@ -213,14 +213,26 @@ public class BST1 {
         if(root == null){
             return true;
         }
-        
+
+        // Check if current node violates BST property:
+        // it must be strictly greater than min and strictly less than max
         if(root.data <= min || root.data >= max){
             return false;
         }
-        
+
+        // Recursively validate:
+        // 1. Left subtree: all values must be < current node's value
+        // 2. Right subtree: all values must be > current node's value
         return validate(root.left,min,root.data) && validate(root.right,root.data,max);
     }
-    
+
+    /*
+    At any node root:
+
+    If both p and q are less than root → go left
+    If both are greater than root → go right
+    Otherwise → this root is the LCA
+     */
     TreeNode lca(TreeNode root,int n1,int n2){
         
         if(root == null) return null;

@@ -87,4 +87,34 @@ public class BT1 {
         
         return 1 + Math.max(left,right);
     }
+
+	public boolean isSameTree(TreeNode node1, TreeNode node2) {
+		// If both nodes are NULL,
+		// they are identical
+		if (node1 == null && node2 == null) {
+			return true;
+		}
+		// If only one of the nodes is
+		// NULL, they are not identical
+		if (node1 == null || node2 == null) {
+			return false;
+		}
+		// Check if the current nodes
+		// have the same data value
+		// and recursively check their
+		// left and right subtrees
+		return ((node1.data == node2.data)
+				&& isSameTree(node1.left, node2.left)
+				&& isSameTree(node1.right, node2.right));
+	}
+
+	public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+		if(root == null) return false;
+
+		if(root.data == subRoot.data){
+			if(isSameTree(root,subRoot)) return true;
+		}
+
+		return isSubtree(root.left,subRoot) || isSubtree(root.right,subRoot);
+	}
 }
