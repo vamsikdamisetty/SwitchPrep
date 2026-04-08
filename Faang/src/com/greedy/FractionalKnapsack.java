@@ -1,8 +1,25 @@
 package com.greedy;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
+class Item{
+	int val;
+	int wt;
+	double itemVal;
+
+	Item(int val,int wt){
+		this.val = val;
+		this.wt = wt;
+		itemVal = (double) val/wt;
+	}
+
+	double getItemVal(){
+		return itemVal;
+	}
+}
 public class FractionalKnapsack {
 	
 	/*
@@ -11,12 +28,38 @@ public class FractionalKnapsack {
 	 */
     public static void main(String args[])
     {
-        int n = 3, weight = 50;
-        Item arr[] = {new Item (100,20),new Item(60,10),new Item(120,30)};
-        double ans = fractionalKnapsack(weight, arr, n);
-        System.out.println("The maximum value is "+ans);
+        int n = 3, capacity = 50;
+//        Item arr[] = {new Item (100,20),new Item(60,10),new Item(120,30)};
+//        double ans = fractionalKnapsack(weight, arr, n);
+		int[] val = {100,60,120};
+		int[] wt = {20,10,30};
+        System.out.println("The maximum value is "+fractionalKnapsack(val,wt,capacity));
     }
 
+	public static double fractionalKnapsack(int[] val, int[] wt, int capacity) {
+
+		List<Item> list = new ArrayList<>();
+		for(int i=0;i<val.length;i++){
+			list.add(new Item(val[i],wt[i]));
+		}
+
+		list.sort(Comparator.comparingDouble(Item::getItemVal).reversed());
+
+		double maxVal=0.0;
+		for(Item item : list){
+			if(capacity >= item.wt){
+				capacity -= item.wt;
+				maxVal += item.val;
+			}else{
+				maxVal += item.itemVal * capacity;
+				break;
+			}
+		}
+		return maxVal;
+	}
+
+
+/*
 	static double fractionalKnapsack(int W, Item arr[], int n) {
 
 		Arrays.sort(arr, new ItemComparator());
@@ -36,9 +79,11 @@ public class FractionalKnapsack {
 			}
 		}
 		return finalValue;
-	}
+	}*/
 }
 
+
+/*
 class ItemComparator implements Comparator<Item> {
 	public int compare(Item a, Item b) {
 		Double r1 = (double) a.value / a.weight;
@@ -55,4 +100,4 @@ class Item {
 		this.value = x;
 		this.weight = y;
 	}
-}
+}*/

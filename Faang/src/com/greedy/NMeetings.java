@@ -18,7 +18,7 @@ public class NMeetings {
 		   int n = 6;
 		   int start[] = {1,3,0,5,8,5};
 		   int end[] = {2,4,5,7,9,9};
-		   System.out.println(maxMeetings(start, end, n));;
+		   System.out.println(maxMeetings(start, end, n));
 	}
 
 	public static int maxMeetings(int[] start, int[] end, int n) {
