@@ -68,5 +68,16 @@ public class ParkingDemo {
         floor1.displayAvailability();
         floor2.displayAvailability();
 
+        System.out.println("--- Test Best Fit");
+        parkingLot.unparkVehicle(truck.getLicenseNo());
+        parkingLot.parkVehicle(car2);
+
+        System.out.println("\n--- Availability after one car leaves ---");
+        floor1.displayAvailability();
+        floor2.displayAvailability();
+
+        //Even F1 Large space is available, it picks the F2 Medium as it fits better for car
+        Optional<ParkingTicket> parkingTicket = parkingLot.parkVehicle(car);
+
     }
     }
