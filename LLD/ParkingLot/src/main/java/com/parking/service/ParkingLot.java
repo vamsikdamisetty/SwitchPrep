@@ -49,19 +49,30 @@ public class ParkingLot {
         this.parkingStrategy = parkingStrategy;
     }
 
-    public Optional<ParkingTicket> parkVehicle(Vehicle vehicle) {
-        Optional<ParkingSpot> availableSpot = parkingStrategy.findSpot(parkingFloors, vehicle);
+    private static final int MAX_RETRIES = 3;
 
-        if (availableSpot.isPresent()) {
+    public Optional<ParkingTicket> parkVehicle(Vehicle vehicle) {
+        for (int attempt = 0; attempt < MAX_RETRIES; attempt++) {
+            Optional<ParkingSpot> availableSpot = parkingStrategy.findSpot(parkingFloors, vehicle);
+
+            if (availableSpot.isEmpty()) {
+                System.out.println("No available spot for " + vehicle.getLicenseNo());
+                return Optional.empty();
+            }
+
             ParkingSpot spot = availableSpot.get();
-            spot.parkVehicle(vehicle);
-            ParkingTicket ticket = new ParkingTicket(vehicle, spot);
-            activeTickets.put(vehicle.getLicenseNo(), ticket);
-            System.out.printf("%s parked at %s. Ticket: %s\n", vehicle.getLicenseNo(), spot.getSpotId(), ticket.getTicketId());
-            return Optional.of(ticket);
+            if (spot.parkVehicle(vehicle)) {
+                // CAS succeeded — spot is ours
+                ParkingTicket ticket = new ParkingTicket(vehicle, spot);
+                activeTickets.put(vehicle.getLicenseNo(), ticket);
+                System.out.printf("%s parked at %s. Ticket: %s\n", vehicle.getLicenseNo(), spot.getSpotId(), ticket.getTicketId());
+                return Optional.of(ticket);
+            }
+            // CAS failed — another thread claimed this spot, retry
+            System.out.printf("Attempt %d: Spot %s was taken, retrying for %s\n", attempt + 1, spot.getSpotId(), vehicle.getLicenseNo());
         }
 
-        System.out.println("No available spot for " + vehicle.getLicenseNo());
+        System.out.println("Could not park after " + MAX_RETRIES + " retries for " + vehicle.getLicenseNo());
         return Optional.empty();
     }
 
