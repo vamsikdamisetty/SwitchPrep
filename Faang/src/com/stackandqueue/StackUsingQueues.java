@@ -44,7 +44,7 @@ class MyStack {
 
     //O(n)
     public void push(int x) {
-        q2 .add(x);
+        q2.add(x);
         q2.addAll(q1);
         q1.clear();
         Queue<Integer> temp = q2;
